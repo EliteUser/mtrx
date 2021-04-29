@@ -1,0 +1,27 @@
+/* Screen sizes */
+
+$screen-sm: 320px;
+$screen-tb: 768px;
+$screen-dt: 1200px;
+
+/* Colors */
+
+:root {
+  --bg-layer-low: #101117;
+  --bg-layer-mid: #14151D;
+  --bg-layer-up: #1A1C2C;
+  --text: #F8F8F8;
+  --accent: #4B92E3;
+  --focus-color: #4B92E3;
+  --secondary-color: #9DA0B2;
+}
+
+html[data-theme='light'] {
+  --bg-layer-low: #F8F8F8;
+  --bg-layer-mid: #F5F5F5;
+  --bg-layer-up: #EFEFEF;
+  --text: #101117;
+  --accent: #3A79C0;
+  --focus-color: #3A79C0;
+  --secondary-color: #9DA0B2;
+}

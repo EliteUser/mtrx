@@ -195,10 +195,10 @@ module.exports = (env, argv) => {
 
       new CopyWebpackPlugin({
         patterns: [
-          // {
-          //   from: './public/fonts',
-          //   to: './build/fonts'
-          // },
+          {
+            from: './public/fonts',
+            to: './build/fonts'
+          },
           // {
           //   from: './public/assets',
           //   to: './build/assets'
