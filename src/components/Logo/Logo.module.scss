@@ -1,0 +1,27 @@
+.logo {
+
+}
+
+.logo__svg {
+  :global * {
+    fill: var(--text);
+    transition: fill 0.3s ease-out;
+  }
+
+  :global .accent {
+    fill: var(--accent);
+    transition: fill 0.3s ease-out;
+  }
+
+  @media (max-width: $screen-tb) {
+    height: 36px;
+  }
+
+  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
+    height: 60px;
+  }
+
+  @media (min-width: $screen-dt + 1) {
+    height: 60px;
+  }
+}
