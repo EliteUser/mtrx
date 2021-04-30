@@ -40,6 +40,7 @@ module.exports = (env, argv) => {
   const isProduction = (argv.mode === 'production');
 
   return {
+    target: 'web',
     entry: './src/index.js',
     output: {
       filename: 'js/bundle.js',
