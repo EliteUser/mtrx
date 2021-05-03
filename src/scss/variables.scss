@@ -13,7 +13,10 @@ $screen-dt: 1200px;
   --text: #F8F8F8;
   --accent: #4B92E3;
   --focus-color: #4B92E3;
+  --slider-focus-color: rgba(75, 146, 227, 0.15);
   --secondary-color: #9DA0B2;
+  --shadow-color: rgba(0, 0, 0, 0.07);
+  --color-light: #F8F8F8;
 }
 
 html[data-theme='light'] {
@@ -23,5 +26,8 @@ html[data-theme='light'] {
   --text: #101117;
   --accent: #3A79C0;
   --focus-color: #3A79C0;
+  --slider-focus-color: rgba(58, 121, 192, 0.15);
   --secondary-color: #9DA0B2;
+  --shadow-color: rgba(0, 0, 0, 0.07);
+  --color-light: #F8F8F8;
 }
