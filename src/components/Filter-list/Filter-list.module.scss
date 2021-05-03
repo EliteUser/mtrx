@@ -1,0 +1,17 @@
+.filter__list {
+
+}
+
+.filter-list__list {
+  margin: 0;
+  padding: 20px;
+  list-style: none;
+}
+
+.filter-list__item {
+  margin-bottom: 20px;
+}
+
+.filter-list__item:last-of-type {
+  margin-bottom: 0;
+}

@@ -1,20 +1,25 @@
 import React, {useState, useCallback} from 'react';
 import PropTypes from 'prop-types';
-import style from './Filter-list.scss';
+import style from './Filter-list.module.scss';
 
 import Filter from '../Filter';
+import {filterConfig, defaultFilterValues} from '../../config';
 
 const FilterList = () => {
-  const [filters, setFilters] = useState({
-    'contrast': 0,
-    'opacity': 0,
-    'brightness': 0,
-  });
+  const [filters, setFilters] = useState(defaultFilterValues);
 
-  const onFilterInput = useCallback(
-    ({target}) => setFilters((state) => ({
+  const onFilterChange = (filterType) => useCallback(
+    (...[, value]) => setFilters((state) => ({
       ...state,
-      [target.name]: target.value
+      [filterType]: value
+    })),
+    []
+  );
+
+  const onResetClick = (filterType) => useCallback(
+    () => setFilters((state) => ({
+      ...state,
+      [filterType]: defaultFilterValues[filterType]
     })),
     []
   );
@@ -24,11 +29,29 @@ const FilterList = () => {
       <ul className={style['filter-list__list']}>
         {
           Object.entries(filters).map(([filterName, value]) => {
-            return <Filter
-              key={filterName}
-              value={value}
-              filterType={filterName}
-              onFilterInput={onFilterInput}/>;
+            const {
+              defaultValue,
+              min,
+              max,
+              step,
+              twoSided
+            } = filterConfig[filterName];
+
+            return (
+              <li className={style['filter-list__item']} key={filterName}>
+                <Filter
+                  value={value}
+                  filterName={filterName}
+                  defaultValue={defaultValue}
+                  min={min}
+                  max={max}
+                  step={step}
+                  twoSided={twoSided}
+                  onFilterChange={onFilterChange(filterName)}
+                  onResetClick={onResetClick(filterName)}
+                />
+              </li>
+            );
           })
         }
       </ul>

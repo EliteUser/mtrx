@@ -1,0 +1,39 @@
+.filter {
+  display: grid;
+  grid-template-areas: "text null" "slider button";
+  grid-template-columns: 1fr 40px;
+  grid-template-rows: 20px 30px;
+  align-items: center;
+  justify-content: center;
+  padding-left: 20px;
+}
+
+.filter__text {
+  grid-area: text;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &--edited {
+   color: var(--accent);
+  }
+}
+
+.filter__slider {
+  grid-area: slider;
+}
+
+.filter__btn {
+  grid-area: button;
+
+
+  margin-left: auto;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  align-self: flex-end;
+
+  svg {
+    height: 16px;
+  }
+}
