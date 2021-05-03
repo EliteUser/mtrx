@@ -1,0 +1,23 @@
+.file-button label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 46px;
+  height: 46px;
+  background-color: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  svg {
+    cursor: pointer;
+    fill: var(--color-light);
+    width: 40px;
+    height: 30px;
+  }
+
+  &:active,
+  &:focus {
+    opacity: 0.75;
+  }
+}
