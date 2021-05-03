@@ -5,11 +5,13 @@
 .big-logo__svg {
   :global * {
     stroke: var(--text);
+    transition: stroke 0.2s;
   }
 
   :global .numbers * {
     stroke: none;
     fill: var(--text);
+    transition: fill 0.2s;
   }
 
   @media (max-width: $screen-tb) {

@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import style from './Link.module.scss';
 
 const Link = (props) => {
+  const {className = '', href, text, children} = props;
+
   return (
-    <div className={props.className}>
-      <a className={style['link']} href={props.href}>
-        {props.text}
-        {props.children}
+    <div className={className}>
+      <a className={style['link']} href={href}>
+        {text}
+        {children}
       </a>
     </div>
   );
