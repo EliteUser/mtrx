@@ -16,30 +16,29 @@
   transform: translateY(-50%);
   height: 22px;
   width: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 2px solid var(--text);
   border-radius: 50%;
   transition: border-color 0.3s ease-in, left 0.3s ease-out;
+}
 
-  &::before {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    transform: translate(-50%, -50%);
-    content: "";
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: 15px;
-    background-image: url("../../../public/assets/icon-sun.svg");
-  }
+.theme-switcher__icon {
+  width: 100%;
+  height: 100%;
+  content: "";
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 15px;
+  background-image: url("../../../public/assets/icon-sun.svg");
 }
 
 .theme-switcher__input:checked + .theme-switcher__switcher {
   .theme-switcher__toggle {
     left: 32px;
 
-    &::before {
+    .theme-switcher__icon {
       background-size: 6px 12px;
       background-image: url("../../../public/assets/icon-moon.svg");
     }

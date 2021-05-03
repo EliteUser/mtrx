@@ -15,7 +15,9 @@ const ThemeSwitcher = (props) => {
         htmlFor="theme-switcher"
         className={style['theme-switcher__switcher']}
         aria-label="Switch dark/light theme">
-        <span className={style['theme-switcher__toggle']}/>
+        <div className={style['theme-switcher__toggle']}>
+          <span className={style['theme-switcher__icon']}/>
+        </div>
       </label>
     </div>
   );
