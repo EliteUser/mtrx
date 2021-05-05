@@ -1,0 +1,25 @@
+.editor {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 50px;
+}
+
+.editor-tabs {
+
+}
+
+.editor-tab {
+  max-height: 50px;
+  font-size: 14px;
+  transition: background-color 0.2s;
+
+  svg {
+    fill: var(--text);
+    max-height: 24px;
+    transition: fill 0.2s;
+  }
+
+  &[aria-selected="true"] svg {
+    fill: var(--accent);
+  }
+}

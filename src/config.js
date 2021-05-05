@@ -3,6 +3,12 @@ export const AppScreen = {
   EDITOR: 'editor'
 };
 
+export const EditorTab = {
+  PRESETS: 'presets',
+  MTRX: 'mtrx',
+  FILTERS: 'filters'
+};
+
 export const filterConfig = {
   'contrast': {
     defaultValue: 1,

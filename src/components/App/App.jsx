@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import Header from '../Header';
 import {AppScreen} from '../../config';
 import EntryScreen from '../Screens/Entry-screen';
-import EditorScreen from '../Screens/Editor-screen/Editor-screen';
+import EditorScreenContainer from '../../containers/Editor-screen-container';
 
 const App = (props) => {
   const {screen = 'entry'} = props;
@@ -19,7 +19,7 @@ const App = (props) => {
       break;
     }
     case AppScreen.EDITOR: {
-      currentScreen = <EditorScreen/>;
+      currentScreen = <EditorScreenContainer/>;
       break;
     }
     default: {

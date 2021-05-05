@@ -1,35 +1,62 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import style from './Editor-screen.module.scss';
 
-import FilterList from '../../Filter-list';
+import StyledTabs from './Styled-tabs';
+import StyledTab from './Styled-tab';
+import EditorTabpanel from '../../Editor-tabpanel';
 
-const Filter = (props) => {
+import {ReactComponent as TextLogo} from '../../../../public/assets/logo-t.svg';
+
+const EditorScreen = (props) => {
   const {
-    filter,
-    onChange
+    activeTab,
+    tabs,
+    onTabChange
   } = props;
 
-  useEffect(() => {
-    onChange();
-  }, [filter]);
+  const onTabClick = (evt, tabName) => {
+    onTabChange(tabName);
+  };
 
   return (
-    <svg className="visually-hidden" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-      <defs>
-        <filter id="filter" filterUnits="objectBoundingBox"
-                primitiveUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-          <feConvolveMatrix order="3 3" kernelMatrix={filter} divisor="9" bias="0" targetX="0" targetY="0"
-                            edgeMode="duplicate" preserveAlpha="true" x="0%" y="0%"
-                            in="SourceGraphic" result="convolveMatrix"/>
-        </filter>
-      </defs>
-    </svg>
+    <div className={style['editor']}>
+      {
+        tabs.map((tabName) => {
+          return (
+            <EditorTabpanel key={tabName} value={activeTab} index={tabName} label={tabName}>
+              {}
+            </EditorTabpanel>
+          );
+        })
+      }
+      <StyledTabs
+        className={style['editor-tabs']}
+        value={activeTab}
+        onChange={onTabClick}
+        variant="fullWidth"
+        aria-label="Application tabs">
+        {
+          tabs.map((tabName) => {
+            const name = tabName === 'mtrx' ? <TextLogo/> : tabName;
+            return (
+              <StyledTab
+                className={style['editor-tab']}
+                key={tabName}
+                label={name}
+                value={tabName}
+                aria-controls={`tabpanel-${tabName}`}
+                id={`tab-${tabName}`}
+              />
+            );
+          })
+        }
+      </StyledTabs>
+    </div>
   );
-};
 
-const EditorScreen = () => {
-  const canvasRef = useRef(null);
+
+  /*const canvasRef = useRef(null);
 
   const [imageFile, setImageFile] = useState(null);
   const [sourceImage, setSourceImage] = useState(null);
@@ -116,9 +143,13 @@ const EditorScreen = () => {
       </div>
       <FilterList/>
     </div>
-  );
+  );*/
 };
 
-EditorScreen.propTypes = {};
+EditorScreen.propTypes = {
+  activeTab: PropTypes.string,
+  tabs: PropTypes.arrayOf(PropTypes.string),
+  onTabChange: PropTypes.func
+};
 
 export default EditorScreen;

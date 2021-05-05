@@ -12,6 +12,13 @@ export const setAppScreenEditor = () => {
   };
 };
 
+export const setEditorTab = (tab) => {
+  return {
+    type: ActionType.SET_EDITOR_TAB,
+    payload: tab
+  };
+};
+
 export const setImage = (image) => {
   return {
     type: ActionType.SET_IMAGE,
