@@ -30,7 +30,7 @@ const EditorScreenContainer = (props) => {
 };
 
 EditorScreenContainer.propTypes = {
-  activeTab: PropTypes.string.isRequired,
+  activeTab: PropTypes.string,
   onTabChange: PropTypes.func.isRequired
 };
 

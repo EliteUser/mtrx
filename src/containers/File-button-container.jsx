@@ -1,12 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {compose, bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {setImageAndGoToEditor} from '../store/actions';
-
 import FileButton from '../components/File-button';
-import PropTypes from 'prop-types';
+import {setImageFileAndGoToEditor} from '../store/actions';
 
 const FileButtonContainer = (props) => {
   const {onFileChange} = props;
@@ -22,7 +21,7 @@ FileButtonContainer.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    onFileChange: (evt) => setImageAndGoToEditor(evt.target.files[0])(),
+    onFileChange: (evt) => setImageFileAndGoToEditor(evt.target.files[0])(),
   }, dispatch);
 };
 
