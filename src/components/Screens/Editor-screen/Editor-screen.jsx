@@ -2,11 +2,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import style from './Editor-screen.module.scss';
 
+import {EditorTab} from '../../../config';
+
 import StyledTabs from './Styled-tabs';
 import StyledTab from './Styled-tab';
 import EditorTabpanel from '../../Editor-tabpanel';
 
 import {ReactComponent as TextLogo} from '../../../../public/assets/logo-t.svg';
+import ImageWorkarea from '../../Image-workarea';
+
+import ControlsWorkareaContainer from '../../../containers/Controls-workarea-container';
+
+const getControls = (tabName) => {
+  let componentToRender = null;
+  switch (tabName) {
+    case EditorTab.PRESETS: {
+
+      break;
+    }
+    case EditorTab.MTRX: {
+      componentToRender = <ControlsWorkareaContainer/>;
+      break;
+    }
+    case EditorTab.FILTERS: {
+
+      break;
+    }
+  }
+
+  return componentToRender;
+};
 
 const EditorScreen = (props) => {
   const {
@@ -21,11 +46,12 @@ const EditorScreen = (props) => {
 
   return (
     <div className={style['editor']}>
+      <ImageWorkarea/>
       {
         tabs.map((tabName) => {
           return (
             <EditorTabpanel key={tabName} value={activeTab} index={tabName} label={tabName}>
-              {}
+              {getControls(tabName)}
             </EditorTabpanel>
           );
         })
@@ -56,53 +82,7 @@ const EditorScreen = (props) => {
   );
 
 
-  /*const canvasRef = useRef(null);
-
-  const [imageFile, setImageFile] = useState(null);
-  const [sourceImage, setSourceImage] = useState(null);
-  const [filter, setFilter] = useState('1 1 1 1 1 1 1 1 1');
-
-  const onFileChange = (evt) => {
-    const URLObj = window.URL || window.webkitURL;
-    const file = evt.target.files[0];
-    setImageFile(file);
-
-    const image = new Image();
-    image.src = URLObj.createObjectURL(file);
-
-    image.onload = () => {
-      const width = image.naturalWidth;
-      const height = image.naturalHeight;
-
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-
-      canvas.width = width;
-      canvas.height = height;
-
-      ctx.filter = 'url(#filter)';
-      ctx.drawImage(image, 0, 0, width, height);
-
-      setSourceImage(image);
-    };
-  };
-
-  const updateCanvas = () => {
-    const canvas = canvasRef.current;
-    if (canvas && sourceImage) {
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(sourceImage, 0, 0, sourceImage.naturalWidth, sourceImage.naturalHeight);
-    }
-  };
-
-  const onFilterChange = (evt) => {
-    setFilter(evt.target.value);
-
-    updateCanvas();
-  };
-
-
+  /*
   const onSaveClick = () => {
     const download = (href, name) => {
       const link = document.createElement('a');
@@ -119,31 +99,7 @@ const EditorScreen = (props) => {
 
       download(jpeg, name);
     }, 'image/jpeg', 1);
-  };
-
-  return (
-    <div className={style['main']}>
-
-
-      <input type="file" onChange={onFileChange}/>
-      <button type="button" onClick={onSaveClick}>Save</button>
-      <textarea
-        name="filter"
-        cols="30"
-        rows="10"
-        onInput={onFilterChange}
-        value={filter}/>
-      <Filter filter={filter} onChange={updateCanvas}/>
-      <div style={{maxHeight: "500px"}}>
-        <canvas style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "contain"
-        }} ref={canvasRef}/>
-      </div>
-      <FilterList/>
-    </div>
-  );*/
+  };*/
 };
 
 EditorScreen.propTypes = {
