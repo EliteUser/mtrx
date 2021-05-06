@@ -9,16 +9,16 @@ const FileButton = (props) => {
 
   return (
     <div className={style['file-button']}>
-      <label htmlFor="file">
-        <PhotoIcon/>
-      </label>
       <input
-        className="visually-hidden"
+        className={`${style['file-button__input']} visually-hidden`}
         type="file"
         id="file"
         name="file"
         onChange={onFileChange}
         aria-label='Choose image to edit'/>
+      <label className={style['file-button__label']} htmlFor="file">
+        <PhotoIcon/>
+      </label>
     </div>
   );
 };

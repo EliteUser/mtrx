@@ -1,16 +1,15 @@
 .logo {
-
 }
 
 .logo__svg {
   :global * {
     fill: var(--text);
-    transition: fill 0.3s ease-out;
+    transition: fill 0.2s ease-out;
   }
 
   :global .accent {
     fill: var(--accent);
-    transition: fill 0.3s ease-out;
+    transition: fill 0.2s ease-out;
   }
 
   @media (max-width: $screen-tb) {

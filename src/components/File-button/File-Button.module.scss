@@ -1,4 +1,10 @@
-.file-button label {
+.file-button__input {
+  &:focus-visible + .file-button__label {
+    box-shadow: 0 0 0 2px var(--text);
+  }
+}
+
+.file-button__label {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,17 +13,18 @@
   background-color: var(--accent);
   border-radius: 50%;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color, opacity 0.2s;
+
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
 
   svg {
-    cursor: pointer;
     fill: var(--color-light);
     width: 40px;
     height: 30px;
   }
 
-  &:active,
-  &:focus {
+  &:active {
     opacity: 0.75;
   }
 }

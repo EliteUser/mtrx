@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
 import style from './Header.module.scss';
 
 import Logo from '../Logo';
@@ -23,7 +22,5 @@ const Header = () => {
     </div>
   );
 };
-
-Header.propTypes = {};
 
 export default Header;

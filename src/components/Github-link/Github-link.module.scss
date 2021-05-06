@@ -2,9 +2,26 @@
   width: 46px;
   height: 46px;
   border-radius: 50%;
+  transition: opacity 0.2s;
+
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+
+  a {
+    outline: none;
+    border-radius: 50%;
+
+    &:focus-visible {
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+  }
 
   svg {
     fill: var(--text);
     transition: fill 0.2s;
+  }
+
+  &:active {
+    opacity: 0.75;
   }
 }
