@@ -1,4 +1,5 @@
 import {ActionType} from './types';
+import {EditorTab} from '../../config';
 
 export const setAppScreenEntry = () => {
   return {
@@ -19,6 +20,15 @@ export const setEditorTab = (tab) => {
   };
 };
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const setImageFile = (imageFile) => {
+  return {
+    type: ActionType.SET_IMAGE_FILE,
+    payload: imageFile
+  };
+};
+
 export const setImage = (image) => {
   return {
     type: ActionType.SET_IMAGE,
@@ -26,7 +36,81 @@ export const setImage = (image) => {
   };
 };
 
-export const setImageAndGoToEditor = (image) => () => (dispatch) => {
-  dispatch(setImage(image));
+export const setImageFileAndGoToEditor = (image) => () => (dispatch) => {
+  dispatch(setImageFile(image));
+  dispatch(setEditorTab(EditorTab.MTRX));
   dispatch(setAppScreenEditor());
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const setKernelX = (value, primitiveId) => {
+  return {
+    type: ActionType.FILTER_PRIMITIVE_KERNEL_X_CHANGED,
+    payload: {
+      value,
+      id: primitiveId
+    }
+  };
+};
+
+export const setKernelY = (value, primitiveId) => {
+  return {
+    type: ActionType.FILTER_PRIMITIVE_KERNEL_Y_CHANGED,
+    payload: {
+      value,
+      id: primitiveId
+    }
+  };
+};
+
+export const setKernelMatrix = (matrixValue, primitiveId) => {
+  return {
+    type: ActionType.FILTER_PRIMITIVE_KERNEL_MATRIX_CHANGED,
+    payload: {
+      value: matrixValue,
+      id: primitiveId
+    }
+  };
+};
+
+export const setDivisor = (value, primitiveId) => {
+  return {
+    type: ActionType.FILTER_PRIMITIVE_DIVISOR_CHANGED,
+    payload: {
+      value: value,
+      id: primitiveId
+    }
+  };
+};
+
+export const setBias = (value, primitiveId) => {
+  return {
+    type: ActionType.FILTER_PRIMITIVE_BIAS_CHANGED,
+    payload: {
+      value: value,
+      id: primitiveId
+    }
+  };
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const setCanvasRef = (value) => {
+  return {
+    type: ActionType.SET_CANVAS_REF,
+    payload: value
+  };
+};
+
+export const removeCanvasRef = () => {
+  return {
+    type: ActionType.REMOVE_CANVAS_REF
+  };
+};
+
+export const updateCanvas = () => {
+  return {
+    type: ActionType.UPDATE_CANVAS
+  };
 };
