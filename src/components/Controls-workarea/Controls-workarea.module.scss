@@ -1,0 +1,66 @@
+.controls-workarea {
+  position: relative;
+  padding: 15px 50px 15px 20px;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: min-content 1fr;
+  grid-gap: 10px;
+}
+
+.controls-workarea__buttons {
+  position: fixed;
+  bottom: 60px;
+  right: 10px;
+}
+
+.controls-workarea__matrix-size {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls-workarea__label {
+  margin: 0 0 8px;
+}
+
+.controls-workarea__wrapper {
+  position: relative;
+  display: flex;
+  width: 110px;
+  justify-content: space-between;
+  align-items: center;
+
+  &:before {
+    content: 'X';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 10px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.controls-workarea__matrix {
+  margin: 0 auto;
+  padding: 20px;
+  grid-column: 1 / -1;
+  overflow-x: scroll;
+  max-width: 100%;
+
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--accent);
+    border-radius: 2px;
+  }
+}
+

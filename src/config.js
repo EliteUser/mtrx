@@ -1,3 +1,6 @@
+export const MIN_KERNEL_SIZE = 1;
+export const MAX_KERNEL_SIZE = 10;
+
 export const AppScreen = {
   ENTRY: 'entry',
   EDITOR: 'editor'

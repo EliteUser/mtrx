@@ -8,13 +8,16 @@ import Canvas from '../components/Canvas';
 import {setImage, setCanvasRef, removeCanvasRef} from '../store/actions';
 
 const CanvasContainer = (props) => {
+  const canvasRef = useRef(null);
   const {
     imageFile,
+    sourceImage,
+    filterString,
     setImage,
     setRef,
-    removeRef
+    removeRef,
+    primitives
   } = props;
-  const canvasRef = useRef(null);
 
   useEffect(() => {
     setRef(canvasRef);
@@ -29,14 +32,9 @@ const CanvasContainer = (props) => {
       const height = image.naturalHeight;
 
       const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
 
       canvas.width = width;
       canvas.height = height;
-
-      // TODO Filter from state
-      ctx.filter = 'url(#filter)';
-      ctx.drawImage(image, 0, 0, width, height);
 
       setImage(image);
     };
@@ -47,6 +45,20 @@ const CanvasContainer = (props) => {
     });
   }, []);
 
+  useEffect(() => {
+    if (sourceImage) {
+      const width = sourceImage.naturalWidth;
+      const height = sourceImage.naturalHeight;
+
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext('2d');
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.filter = filterString ? filterString : 'none';
+      ctx.drawImage(sourceImage, 0, 0, width, height);
+    }
+  }, [filterString, sourceImage, primitives]);
+
   return (
     <Canvas ref={canvasRef}/>
   );
@@ -54,15 +66,29 @@ const CanvasContainer = (props) => {
 
 CanvasContainer.propTypes = {
   imageFile: PropTypes.object,
+  sourceImage: PropTypes.object,
+  filterString: PropTypes.string,
+  primitives: PropTypes.array,
   setImage: PropTypes.func.isRequired,
   setRef: PropTypes.func.isRequired,
-  removeRef: PropTypes.func.isRequired
+  removeRef: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
-  const {imageFile} = state.image;
+  const {
+    imageFile,
+    sourceImage,
+  } = state.image;
+
+  const {
+    filterString,
+    primitives
+  } = state.filter;
   return {
-    imageFile
+    imageFile,
+    sourceImage,
+    filterString,
+    primitives
   };
 };
 

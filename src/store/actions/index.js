@@ -74,6 +74,17 @@ export const setKernelMatrix = (matrixValue, primitiveId) => {
   };
 };
 
+export const setKernelMatrixElement = (value, primitiveId, elementPositionIndex) => {
+  return {
+    type: ActionType.FILTER_PRIMITIVE_KERNEL_MATRIX_ELEMENT_CHANGED,
+    payload: {
+      value,
+      id: primitiveId,
+      index: elementPositionIndex
+    }
+  };
+};
+
 export const setDivisor = (value, primitiveId) => {
   return {
     type: ActionType.FILTER_PRIMITIVE_DIVISOR_CHANGED,
@@ -112,5 +123,17 @@ export const removeCanvasRef = () => {
 export const updateCanvas = () => {
   return {
     type: ActionType.UPDATE_CANVAS
+  };
+};
+
+export const saveImage = () => {
+  return {
+    type: ActionType.SAVE_IMAGE
+  };
+};
+
+export const toggleFilter = () => {
+  return {
+    type: ActionType.TOGGLE_FILTER
   };
 };

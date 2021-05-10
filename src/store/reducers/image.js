@@ -36,15 +36,24 @@ const image = (state = initialState, action) => {
       };
     }
 
-    case ActionType.UPDATE_CANVAS: {
+    case ActionType.SAVE_IMAGE: {
       const canvas = state.canvasRef.current;
-      const sourceImage = state.sourceImage;
 
-      if (canvas && sourceImage) {
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(sourceImage, 0, 0, sourceImage.naturalWidth, sourceImage.naturalHeight);
-      }
+      const download = (href, name) => {
+        const link = document.createElement('a');
+        link.download = name;
+        link.href = href;
+        link.click();
+        link.remove();
+      };
+
+      canvas.toBlob((blob) => {
+        const URLObj = window.URL || window.webkitURL;
+        const jpeg = URLObj.createObjectURL(blob);
+        const name = `mtrx_edited_${+new Date()}.jpeg`;
+
+        download(jpeg, name);
+      }, 'image/jpeg', 1);
 
       return state;
     }
