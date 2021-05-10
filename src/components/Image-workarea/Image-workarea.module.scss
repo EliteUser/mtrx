@@ -1,6 +1,19 @@
 .image-workarea {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px 0;
+}
+
+.image-workarea__save-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.image-workarea__preview-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }

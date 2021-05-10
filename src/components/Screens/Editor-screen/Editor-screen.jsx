@@ -9,7 +9,7 @@ import StyledTab from './Styled-tab';
 import EditorTabpanel from '../../Editor-tabpanel';
 
 import {ReactComponent as TextLogo} from '../../../../public/assets/logo-t.svg';
-import ImageWorkarea from '../../Image-workarea';
+import ImageWorkareaContainer from '../../../containers/Image-workarea-container';
 
 import ControlsWorkareaContainer from '../../../containers/Controls-workarea-container';
 
@@ -46,7 +46,7 @@ const EditorScreen = (props) => {
 
   return (
     <div className={style['editor']}>
-      <ImageWorkarea/>
+      <ImageWorkareaContainer/>
       {
         tabs.map((tabName) => {
           return (
@@ -80,26 +80,6 @@ const EditorScreen = (props) => {
       </StyledTabs>
     </div>
   );
-
-
-  /*
-  const onSaveClick = () => {
-    const download = (href, name) => {
-      const link = document.createElement('a');
-      link.download = name;
-      link.href = href;
-      link.click();
-      link.remove();
-    };
-
-    canvasRef.current.toBlob((blob) => {
-      const URLObj = window.URL || window.webkitURL;
-      const jpeg = URLObj.createObjectURL(blob);
-      const name = 'edited.jpeg';
-
-      download(jpeg, name);
-    }, 'image/jpeg', 1);
-  };*/
 };
 
 EditorScreen.propTypes = {
