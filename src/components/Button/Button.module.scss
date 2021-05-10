@@ -5,14 +5,60 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background-color 0.2s;
+  transition: background-color, color 0.2s;
+  color: var(--text);
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
 
   &:hover,
-  &:focus {
+  &:focus-visible {
     background-color: var(--bg-layer-up);
   }
-}
 
-.btn svg {
-  fill: var(--text);
+  &:active {
+    opacity: 0.75;
+  }
+
+  svg {
+    fill: var(--text);
+    width: 16px;
+    height: 16px;
+    transition: fill 0.2s;
+  }
+
+  &--active {
+    svg {
+      fill: var(--accent);
+      stroke: var(--accent);
+      color: var(--accent);
+    }
+  }
+
+  &--accent {
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    background-color: var(--accent);
+    outline: none;
+    box-shadow: 0 4px 4px var(--shadow-color), 0 4px 10px var(--shadow-color);
+
+    &:hover {
+      background-color: var(--accent);
+    }
+
+    &:focus-visible {
+      background-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--text);
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--color-light);
+    }
+  }
 }
