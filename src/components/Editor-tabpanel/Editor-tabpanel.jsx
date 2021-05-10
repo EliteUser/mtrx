@@ -13,6 +13,7 @@ const EditorTabpanel = (props) => {
 
   return (
     <div
+      className={style['editor-tabpanel']}
       role="tabpanel"
       hidden={value !== index}
       id={`tabpanel-${label}`}

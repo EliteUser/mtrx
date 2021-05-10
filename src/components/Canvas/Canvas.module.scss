@@ -2,5 +2,5 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  max-height: calc(100vh - 370px); // 60px header + 20*2 paddings + 150px controls + 50px tabs + 70px chrome url bar (android)
+  max-height: calc(100vh - 400px); // 60px header + 20*2 paddings + 180px controls + 50px tabs + 70px chrome url bar (android)
 }

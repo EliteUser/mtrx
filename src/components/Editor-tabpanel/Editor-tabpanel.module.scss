@@ -1,0 +1,14 @@
+.editor-tabpanel {
+  background-color: var(--bg-layer-up);
+  overflow-y: scroll;
+  transition: background-color 0.2s;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--accent);
+    border-radius: 2px;
+  }
+}
