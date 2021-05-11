@@ -1,0 +1,40 @@
+.matrix-textarea {
+  position: relative;
+  width: 90%;
+}
+
+.matrix-textarea__textarea{
+  background-color: transparent;
+  color: var(--text);
+  width: 100%;
+  min-height: 120px;
+  padding: 10px;
+  font-size: 18px;
+  border: 1px solid var(--text);
+  border-radius: 2px;
+  outline: none;
+
+  &:hover,
+  &:active {
+    opacity: 0.75;
+  }
+
+  &:focus-within {
+    border-color: var(--accent);
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--accent);
+    border-radius: 2px;
+  }
+}
+
+.matrix-textarea__btn {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 5px);
+}

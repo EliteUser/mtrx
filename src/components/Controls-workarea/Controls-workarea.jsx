@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import style from './Controls-workarea.module.scss';
 import btnStyle from '../Button/Button.module.scss';
 
-import {getFormattedMatrix} from '../../utils/utils';
 import Input from '../Input';
-import Textarea from '../Textarea';
+import MatrixTextareaContainer from '../../containers/Matrix-textarea-container';
 import MatrixInputsContainer from '../../containers/Matrix-inputs-container';
 
 import {ReactComponent as AdvancedModeIcon} from '../../../public/assets/icon-expand.svg';
@@ -35,8 +34,6 @@ const ControlsWorkarea = (props) => {
     setIsAdvancedMode(!isAdvancedMode);
   };
 
-  const formattedMatrix = getFormattedMatrix(kernelMatrix, kernelX);
-
   return (
     <div className={style['controls-workarea']}>
       <div className={style['controls-workarea__buttons']}>
@@ -45,6 +42,7 @@ const ControlsWorkarea = (props) => {
           text={'Change Matrix Mode'}
           className={btnStyle['btn--accent']}
           onBtnClick={onModeChange}
+          title={isAdvancedMode ? 'Standard Mode' : 'Advanced Mode'}
         >
           {
             isAdvancedMode ?
@@ -95,10 +93,13 @@ const ControlsWorkarea = (props) => {
       />
 
       <div className={style['controls-workarea__matrix']}>
+        <p className={style['controls-workarea__title']}>Matrix</p>
         {
           isAdvancedMode ?
-            <Textarea
+            <MatrixTextareaContainer
               value={kernelMatrix}
+              kernelX={kernelX}
+              primitiveId={id}
               name={'matrix'}
               onChange={(evt) => onKernelMatrixChange(evt.target.value, id)}
             /> :
@@ -116,7 +117,7 @@ const ControlsWorkarea = (props) => {
 
 ControlsWorkarea.propTypes = {
 
-  //TODO
+  //TODO REFACTOR PROPS DUPLICATE TO ...REST
 };
 
 export default ControlsWorkarea;

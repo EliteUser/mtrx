@@ -47,12 +47,17 @@
   }
 }
 
+.controls-workarea__title {
+  margin: 0 0 8px;
+}
+
 .controls-workarea__matrix {
   margin: 0 auto;
-  padding: 20px;
+  padding: 10px 20px 10px 10px;
   grid-column: 1 / -1;
   overflow-x: scroll;
   max-width: 100%;
+  min-width: 250px;
 
   &::-webkit-scrollbar {
     height: 4px;

@@ -13,7 +13,7 @@ const MatrixInputs = (props) => {
     onKernelMatrixElementChange
   } = props;
 
-  const matrixArray = matrix.split(' ');
+  const matrixArray = matrix.trim().split(/\r|\s/g);
 
   const onChange = (evt) => {
     const value = evt.target.value;

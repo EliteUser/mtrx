@@ -1,11 +1,13 @@
+import {compose} from 'redux';
+
 import {ActionType} from '../actions/types';
 import {MIN_KERNEL_SIZE, MAX_KERNEL_SIZE} from '../../config';
-import {compose} from 'redux';
 
 import {
   formatPositiveInteger,
   rangeValue,
-  replaceDecimals
+  replaceDecimals,
+  getFormattedMatrix
 } from '../../utils/utils';
 
 const initialState = {
@@ -16,7 +18,7 @@ const initialState = {
       id: '1',
       kernelX: 3,
       kernelY: 3,
-      kernelMatrix: '1 1 1 1 1 1 1 1 1',
+      kernelMatrix: '1 1 1\r1 1 1\r1 1 1',
       divisor: 9,
       bias: 0
     }
@@ -57,6 +59,7 @@ const updatePrimitive = (primitives, {
     [prop]: propFormatting[prop](value)
   };
 
+  // If kernelX or kernelY changed, update matrix (fill with 1s or truncate)
   const xProp = primitiveActionToPropMap.FILTER_PRIMITIVE_KERNEL_X_CHANGED;
   const yProp = primitiveActionToPropMap.FILTER_PRIMITIVE_KERNEL_Y_CHANGED;
 
@@ -70,14 +73,14 @@ const updatePrimitive = (primitives, {
     if (!kernelX || !kernelY) {
       updatedPrimitive.kernelMatrix = '1';
     } else {
-      const matrixArray = kernelMatrix.split(' ');
+      const matrixArray = kernelMatrix.trim().split(/\r|\s/g);
       const dimensionSize = kernelX * kernelY;
 
       if (matrixArray.length > dimensionSize) {
-        updatedPrimitive.kernelMatrix = matrixArray.slice(0, dimensionSize).join(' ');
+        updatedPrimitive.kernelMatrix = getFormattedMatrix(matrixArray.slice(0, dimensionSize).join(' '), kernelX);
       } else if (matrixArray.length < dimensionSize) {
         const newKernel = [...matrixArray, ...Array(dimensionSize - matrixArray.length).fill('1')];
-        updatedPrimitive.kernelMatrix = newKernel.join(' ');
+        updatedPrimitive.kernelMatrix = getFormattedMatrix(newKernel.join(' '), kernelX);
       }
     }
   }
@@ -99,12 +102,12 @@ const updateKernelElement = (primitives, {
   const primitiveIndex = primitives.findIndex(({id}) => primitiveId === id);
   const primitive = primitives[primitiveIndex];
 
-  const matrixArray = primitive.kernelMatrix.split(' ');
+  const matrixArray = primitive.kernelMatrix.trim().split(/\r|\s/g);
   matrixArray[index] = value;
 
   const updatedPrimitive = {
     ...primitive,
-    kernelMatrix: matrixArray.join(' ')
+    kernelMatrix: getFormattedMatrix(matrixArray.join(' '), primitive.kernelX)
   };
 
   return [
@@ -139,6 +142,25 @@ const filter = (state = initialState, action) => {
           primitiveId: id,
           value,
           index
+        });
+
+        return {
+          ...state,
+          primitives: updatedPrimitives
+        };
+      }
+
+      case ActionType.FILTER_MATRIX_FORMAT: {
+        const {
+          value,
+          kernelX
+        } = action.payload;
+        const formattedMatrix = getFormattedMatrix(value, kernelX);
+
+        const updatedPrimitives = updatePrimitive(state.primitives, {
+          primitiveId: action.payload.id,
+          prop: primitiveActionToPropMap.FILTER_PRIMITIVE_KERNEL_MATRIX_CHANGED,
+          value: formattedMatrix
         });
 
         return {

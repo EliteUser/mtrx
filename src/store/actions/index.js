@@ -105,6 +105,17 @@ export const setBias = (value, primitiveId) => {
   };
 };
 
+export const formatMatrix = (value, kernelX, primitiveId) => {
+  return {
+    type: ActionType.FILTER_MATRIX_FORMAT,
+    payload: {
+      value: value,
+      kernelX: kernelX,
+      id: primitiveId
+    }
+  };
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const setCanvasRef = (value) => {
