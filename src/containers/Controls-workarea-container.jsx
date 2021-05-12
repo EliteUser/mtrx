@@ -5,7 +5,14 @@ import {compose, bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import ControlsWorkarea from '../components/Controls-workarea';
-import {setKernelX, setKernelY, setKernelMatrix, setDivisor, setBias} from '../store/actions';
+import {
+  setKernelX,
+  setKernelY,
+  setKernelMatrix,
+  setDivisor,
+  setBias,
+  resetMatrix
+} from '../store/actions';
 
 const ControlsWorkareaContainer = (props) => {
   const {
@@ -14,7 +21,8 @@ const ControlsWorkareaContainer = (props) => {
     onKernelYChange,
     onKernelMatrixChange,
     onDivisorChange,
-    onBiasChange
+    onBiasChange,
+    onReset,
   } = props;
   return (
     <ControlsWorkarea
@@ -24,13 +32,12 @@ const ControlsWorkareaContainer = (props) => {
       onKernelMatrixChange={onKernelMatrixChange}
       onDivisorChange={onDivisorChange}
       onBiasChange={onBiasChange}
+      onReset={onReset}
     />
   );
 };
 
-ControlsWorkareaContainer.propTypes = {
-
-};
+ControlsWorkareaContainer.propTypes = {};
 
 const mapStateToProps = (state) => {
   const selectedPrimitiveIndex = state.filter.primitives.findIndex(({id}) => id === state.filter.selectedPrimitive);
@@ -45,7 +52,8 @@ const mapDispatchToProps = (dispatch) => {
     onKernelYChange: setKernelY,
     onKernelMatrixChange: setKernelMatrix,
     onDivisorChange: setDivisor,
-    onBiasChange: setBias
+    onBiasChange: setBias,
+    onReset: resetMatrix,
   }, dispatch);
 };
 

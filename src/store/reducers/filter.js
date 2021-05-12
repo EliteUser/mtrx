@@ -1,7 +1,8 @@
 import {compose} from 'redux';
+import deepClone from 'lodash.clonedeep';
 
 import {ActionType} from '../actions/types';
-import {MIN_KERNEL_SIZE, MAX_KERNEL_SIZE} from '../../config';
+import {DEFAULT_PRIMITIVE, MIN_KERNEL_SIZE, MAX_KERNEL_SIZE} from '../../config';
 
 import {
   formatPositiveInteger,
@@ -13,15 +14,11 @@ import {
 const initialState = {
   filterString: 'url(#filter)',
   selectedPrimitive: '1',
+  defaultPrimitives: [
+    {...DEFAULT_PRIMITIVE}
+  ],
   primitives: [
-    {
-      id: '1',
-      kernelX: 3,
-      kernelY: 3,
-      kernelMatrix: '1 1 1\r1 1 1\r1 1 1',
-      divisor: 9,
-      bias: 0
-    }
+    {...DEFAULT_PRIMITIVE}
   ]
 };
 
@@ -73,7 +70,7 @@ const updatePrimitive = (primitives, {
     if (!kernelX || !kernelY) {
       updatedPrimitive.kernelMatrix = '1';
     } else {
-      const matrixArray = kernelMatrix.trim().split(/\r|\s/g);
+      const matrixArray = kernelMatrix.trimRight().split(/\r|\s/g);
       const dimensionSize = kernelX * kernelY;
 
       if (matrixArray.length > dimensionSize) {
@@ -102,12 +99,13 @@ const updateKernelElement = (primitives, {
   const primitiveIndex = primitives.findIndex(({id}) => primitiveId === id);
   const primitive = primitives[primitiveIndex];
 
-  const matrixArray = primitive.kernelMatrix.trim().split(/\r|\s/g);
+  const matrixArray = primitive.kernelMatrix.trimRight().split(/\r|\s/g);
   matrixArray[index] = value;
 
   const updatedPrimitive = {
     ...primitive,
-    kernelMatrix: getFormattedMatrix(matrixArray.join(' '), primitive.kernelX)
+    // kernelMatrix: getFormattedMatrix(matrixArray.join(' '), primitive.kernelX).trimRight()
+    kernelMatrix: matrixArray.join(' ').trimRight()
   };
 
   return [
@@ -131,6 +129,9 @@ const filter = (state = initialState, action) => {
       primitives: updatedPrimitives
     };
   } else {
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     switch (action.type) {
       case ActionType.FILTER_PRIMITIVE_KERNEL_MATRIX_ELEMENT_CHANGED: {
         const {
@@ -150,6 +151,8 @@ const filter = (state = initialState, action) => {
         };
       }
 
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
       case ActionType.FILTER_MATRIX_FORMAT: {
         const {
           value,
@@ -168,6 +171,29 @@ const filter = (state = initialState, action) => {
           primitives: updatedPrimitives
         };
       }
+
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      case ActionType.FILTER_MATRIX_RESET: {
+        const {id: primitiveId} = action.payload;
+        const {
+          primitives,
+          defaultPrimitives
+        } = state;
+        const primitiveIndex = primitives.findIndex(({id}) => primitiveId === id);
+        const defaultPrimitive = defaultPrimitives.find(({id}) => primitiveId === id);
+
+        return {
+          ...state,
+          primitives: [
+            ...primitives.slice(0, primitiveIndex),
+            {...deepClone(defaultPrimitive)},
+            ...primitives.slice(primitiveIndex + 1)
+          ]
+        };
+      }
+
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       case ActionType.TOGGLE_FILTER: {
         const filter = state.filterString.length ? '' : getFilterString(state);

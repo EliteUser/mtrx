@@ -9,8 +9,8 @@ import MatrixInputsContainer from '../../containers/Matrix-inputs-container';
 
 import {ReactComponent as AdvancedModeIcon} from '../../../public/assets/icon-expand.svg';
 import {ReactComponent as StandardModeIcon} from '../../../public/assets/icon-hide.svg';
+import {ReactComponent as ResetIcon} from '../../../public/assets/icon-reset.svg';
 import Button from '../Button';
-
 
 const ControlsWorkarea = (props) => {
   const {
@@ -27,6 +27,7 @@ const ControlsWorkarea = (props) => {
     onKernelMatrixChange,
     onDivisorChange,
     onBiasChange,
+    onReset
   } = props;
 
   const [isAdvancedMode, setIsAdvancedMode] = useState(false);
@@ -107,6 +108,16 @@ const ControlsWorkarea = (props) => {
         }
 
         <div className={style['controls-workarea__buttons']}>
+          <Button
+            isTextHidden={true}
+            text={'Reset filter settings'}
+            className={btnStyle['btn--accent']}
+            onBtnClick={() => onReset(id)}
+            title={'Reset filter settings'}
+          >
+            <ResetIcon/>
+          </Button>
+
           <Button
             isTextHidden={true}
             text={'Change Matrix Mode'}

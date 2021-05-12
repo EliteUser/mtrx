@@ -116,6 +116,15 @@ export const formatMatrix = (value, kernelX, primitiveId) => {
   };
 };
 
+export const resetMatrix = (primitiveId) => {
+  return {
+    type: ActionType.FILTER_MATRIX_RESET,
+    payload: {
+      id: primitiveId
+    }
+  };
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const setCanvasRef = (value) => {
