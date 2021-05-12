@@ -1,63 +1,11 @@
 .controls-workarea {
   position: relative;
-  padding: 15px 50px 15px 20px;
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  grid-template-rows: min-content 1fr;
-  grid-gap: 10px;
-}
-
-.controls-workarea__buttons {
-  position: fixed;
-  bottom: 60px;
-  right: 10px;
-}
-
-.controls-workarea__matrix-size {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.controls-workarea__label {
-  margin: 0 0 8px;
-}
-
-.controls-workarea__wrapper {
-  position: relative;
-  display: flex;
-  width: 110px;
-  justify-content: space-between;
-  align-items: center;
-
-  &:before {
-    content: 'X';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    width: 10px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
-
-.controls-workarea__title {
-  margin: 0 0 8px;
-}
-
-.controls-workarea__matrix {
-  margin: 0 auto;
-  padding: 10px 20px 10px 10px;
-  grid-column: 1 / -1;
   overflow-x: scroll;
-  max-width: 100%;
-  min-width: 250px;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  width: 100vw;
+  height: 100%;
 
   &::-webkit-scrollbar {
     height: 4px;
@@ -69,3 +17,86 @@
   }
 }
 
+.controls-workarea__snap-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  scroll-snap-align: center;
+  flex-shrink: 0;
+  padding: 10px 20px;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--accent);
+    border-radius: 2px;
+  }
+}
+
+// region Filter controls
+
+.controls-workarea__controls {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  width: 280px;
+  margin: 0 auto;
+}
+
+.controls-workarea__matrix-size {
+  display: flex;
+  align-items: center;
+
+  span {
+    margin: 0 5px;
+  }
+}
+
+.controls-workarea__label {
+  margin: 0 auto 0 0;
+}
+
+// endregion Filter controls
+
+.controls-workarea__matrix-textarea {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  padding-right: 70px;
+}
+
+.controls-workarea__matrix-inputs {
+  display: grid;
+  justify-content: center;
+  margin: 0 auto;
+  width: 80%;
+  height: 100%;
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--accent);
+    border-radius: 2px;
+  }
+
+  &::-webkit-scrollbar-corner {
+    display: none;
+  }
+}
+
+.controls-workarea__buttons {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}

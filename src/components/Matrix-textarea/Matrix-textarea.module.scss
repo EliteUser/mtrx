@@ -1,15 +1,16 @@
 .matrix-textarea {
   position: relative;
-  width: 90%;
+  width: 100%;
+  display: flex;
 }
 
-.matrix-textarea__textarea{
-  background-color: transparent;
-  color: var(--text);
+.matrix-textarea__textarea {
   width: 100%;
   min-height: 120px;
   padding: 10px;
   font-size: 18px;
+  color: var(--text);
+  background-color: transparent;
   border: 1px solid var(--text);
   border-radius: 2px;
   outline: none;
@@ -25,6 +26,7 @@
 
   &::-webkit-scrollbar {
     width: 4px;
+    height: 4px;
   }
 
   &::-webkit-scrollbar-thumb {
