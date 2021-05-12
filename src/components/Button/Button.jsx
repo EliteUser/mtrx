@@ -8,7 +8,8 @@ const Button = (props) => {
     isTextHidden = false,
     text,
     children,
-    onBtnClick
+    onBtnClick,
+    ...rest
   } = props;
 
   const styles = [style['btn'], className].join(' ').trim();
@@ -18,7 +19,12 @@ const Button = (props) => {
     : <span className={style['btn__text']}>{text}</span>;
 
   return (
-    <button className={styles} type="button" onClick={onBtnClick}>
+    <button
+      className={styles}
+      type="button"
+      onClick={onBtnClick}
+      {...rest}
+    >
       {textElement}
       {children}
     </button>
