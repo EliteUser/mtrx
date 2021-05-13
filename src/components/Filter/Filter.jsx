@@ -10,15 +10,15 @@ import {toPercentageScale} from '../../utils/utils';
 
 const Filter = (props) => {
   const {
-    value,
     filterName,
     defaultValue,
+    value,
     min,
     max,
     step,
     twoSided,
     onFilterChange,
-    onResetClick
+    onFilterReset
   } = props;
 
   const isEdited = value !== defaultValue;
@@ -51,7 +51,7 @@ const Filter = (props) => {
           className={style['filter__btn']}
           isTextHidden={true}
           text={`Reset ${filterName} filter`}
-          onBtnClick={onResetClick}
+          onBtnClick={onFilterReset}
         >
           <ResetIcon/>
         </Button>
@@ -62,15 +62,15 @@ const Filter = (props) => {
 };
 
 Filter.propTypes = {
-  value: PropTypes.number.isRequired,
   filterName: PropTypes.string.isRequired,
   defaultValue: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
   step: PropTypes.number.isRequired,
   twoSided: PropTypes.bool.isRequired,
   onFilterChange: PropTypes.func.isRequired,
-  onResetClick: PropTypes.func.isRequired,
+  onFilterReset: PropTypes.func.isRequired,
 };
 
 export default React.memo(Filter);

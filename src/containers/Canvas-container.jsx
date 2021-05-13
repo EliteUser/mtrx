@@ -46,17 +46,19 @@ const CanvasContainer = (props) => {
   }, []);
 
   useEffect(() => {
-    if (sourceImage) {
-      const width = sourceImage.naturalWidth;
-      const height = sourceImage.naturalHeight;
+    requestAnimationFrame(() => {
+      if (sourceImage) {
+        const width = sourceImage.naturalWidth;
+        const height = sourceImage.naturalHeight;
 
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.filter = filterString ? filterString : 'none';
-      ctx.drawImage(sourceImage, 0, 0, width, height);
-    }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.filter = filterString ? filterString : 'none';
+        ctx.drawImage(sourceImage, 0, 0, width, height);
+      }
+    });
   }, [filterString, sourceImage, primitives]);
 
   return (

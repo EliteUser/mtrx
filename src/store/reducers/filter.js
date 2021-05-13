@@ -2,24 +2,49 @@ import {compose} from 'redux';
 import deepClone from 'lodash.clonedeep';
 
 import {ActionType} from '../actions/types';
-import {DEFAULT_PRIMITIVE, MAX_KERNEL_SIZE, MIN_KERNEL_SIZE} from '../../config';
+import {
+  DEFAULT_PRIMITIVE,
+  MAX_KERNEL_SIZE,
+  MIN_KERNEL_SIZE,
+  filterConfig,
+  filterValueToStringMap,
+} from '../../config';
 
-import {formatPositiveInteger, rangeValue, replaceDecimals} from '../../utils/utils';
+import {
+  getFiltersProp,
+  formatPositiveInteger,
+  rangeValue,
+  replaceDecimals
+} from '../../utils/utils';
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const getFilterString = (filters) => {
+  const filterValues = getFiltersProp(filters, 'value');
+  const filtersString = Object.entries(filterValues).reduce((acc, el) => {
+    const key = el[0];
+    const value = el[1];
+
+    acc = `${acc} ${filterValueToStringMap[key](value)}`;
+    return acc.trim();
+  }, '');
+
+  return `url(#filter) ${filtersString}`;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const initialFilterConfig = deepClone(filterConfig);
 const initialState = {
-  filterString: 'url(#filter)',
+  filterString: getFilterString(initialFilterConfig),
   selectedPrimitive: '1',
   defaultPrimitives: [
     {...DEFAULT_PRIMITIVE}
   ],
   primitives: [
     {...DEFAULT_PRIMITIVE}
-  ]
-};
-
-const getFilterString = (state) => {
-  // TODO filters
-  return `url(#filter)`;
+  ],
+  filters: initialFilterConfig
 };
 
 const primitiveActionToPropMap = {
@@ -37,6 +62,8 @@ const propFormatting = {
   divisor: replaceDecimals,
   bias: replaceDecimals,
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const updatePrimitive = (primitives, {
   primitiveId,
@@ -105,6 +132,25 @@ const updateKernelElement = (primitives, {
     updatedPrimitive,
     ...primitives.slice(primitiveIndex + 1)
   ];
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const updateFilters = (filters, {
+  value,
+  filterName
+}) => {
+  const newFilters = deepClone(filters);
+  newFilters[filterName].value = value;
+
+  return newFilters;
+};
+
+const resetFilter = (filters, filterName) => {
+  const newFilters = deepClone(filters);
+  newFilters[filterName].value = filters[filterName].defaultValue;
+
+  return newFilters;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -186,11 +232,40 @@ const filter = (state = initialState, action) => {
       //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       case ActionType.TOGGLE_FILTER: {
-        const filter = state.filterString.length ? '' : getFilterString(state);
+        const filter = state.filterString.length ? '' : getFilterString(state.filters);
 
         return {
           ...state,
           filterString: filter
+        };
+      }
+
+      case ActionType.FILTER_CHANGED: {
+        const {filters} = state;
+        const {
+          value,
+          name
+        } = action.payload;
+        const updatedFilters = updateFilters(filters, {
+          value,
+          filterName: name
+        });
+
+        return {
+          ...state,
+          filterString: getFilterString(updatedFilters),
+          filters: updatedFilters
+        };
+      }
+
+      case ActionType.FILTER_RESET: {
+        const {filters} = state;
+        const updatedFilters = resetFilter(filters, action.payload.name);
+
+        return {
+          ...state,
+          filterString: getFilterString(updatedFilters),
+          filters: updatedFilters
         };
       }
 

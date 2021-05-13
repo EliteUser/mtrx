@@ -156,3 +156,24 @@ export const toggleFilter = () => {
     type: ActionType.TOGGLE_FILTER
   };
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const setFilter = (value, filterName) => {
+  return {
+    type: ActionType.FILTER_CHANGED,
+    payload: {
+      value: value,
+      name: filterName
+    }
+  };
+};
+
+export const resetFilter = (filterName) => {
+  return {
+    type: ActionType.FILTER_RESET,
+    payload: {
+      name: filterName
+    }
+  };
+};

@@ -1,3 +1,8 @@
+export const getFiltersProp = (filterConfig, propName) => {
+  return Object.entries(filterConfig)
+    .reduce((acc, el) => Object.assign(acc, {[el[0]]: el[1][propName]}), {});
+};
+
 export const toPercentageScale = (min, max, twoSided, value) => {
   if (twoSided) {
     return -100 + Math.floor(200 / (max - min) * (value));

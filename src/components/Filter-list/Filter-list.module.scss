@@ -1,15 +1,30 @@
-.filter__list {
-
+.filter-list {
+  display: flex;
+  height: 100%;
+  overflow-y: hidden;
 }
 
 .filter-list__list {
   margin: 0;
   padding: 20px;
   list-style: none;
+
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--accent);
+    border-radius: 2px;
+  }
 }
 
 .filter-list__item {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .filter-list__item:last-of-type {
