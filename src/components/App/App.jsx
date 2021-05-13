@@ -10,7 +10,7 @@ import EntryScreen from '../Screens/Entry-screen';
 import EditorScreenContainer from '../../containers/Editor-screen-container';
 
 const App = (props) => {
-  const {screen = 'entry'} = props;
+  const {screen = AppScreen.ENTRY} = props;
 
   let currentScreen = null;
   switch (screen) {
