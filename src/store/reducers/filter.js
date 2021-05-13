@@ -2,14 +2,9 @@ import {compose} from 'redux';
 import deepClone from 'lodash.clonedeep';
 
 import {ActionType} from '../actions/types';
-import {DEFAULT_PRIMITIVE, MIN_KERNEL_SIZE, MAX_KERNEL_SIZE} from '../../config';
+import {DEFAULT_PRIMITIVE, MAX_KERNEL_SIZE, MIN_KERNEL_SIZE} from '../../config';
 
-import {
-  formatPositiveInteger,
-  rangeValue,
-  replaceDecimals,
-  getFormattedMatrix
-} from '../../utils/utils';
+import {formatPositiveInteger, rangeValue, replaceDecimals} from '../../utils/utils';
 
 const initialState = {
   filterString: 'url(#filter)',
@@ -38,7 +33,7 @@ const primitiveActionToPropMap = {
 const propFormatting = {
   kernelX: compose(formatPositiveInteger, rangeValue(MIN_KERNEL_SIZE, MAX_KERNEL_SIZE)),
   kernelY: compose(formatPositiveInteger, rangeValue(MIN_KERNEL_SIZE, MAX_KERNEL_SIZE)),
-  kernelMatrix: (v) => v,
+  kernelMatrix: (value) => value instanceof Array ? value : value.split(/\r|\s/g),
   divisor: replaceDecimals,
   bias: replaceDecimals,
 };
@@ -68,16 +63,14 @@ const updatePrimitive = (primitives, {
     } = updatedPrimitive;
 
     if (!kernelX || !kernelY) {
-      updatedPrimitive.kernelMatrix = '1';
+      updatedPrimitive.kernelMatrix = ['1'];
     } else {
-      const matrixArray = kernelMatrix.trimRight().split(/\r|\s/g);
       const dimensionSize = kernelX * kernelY;
 
-      if (matrixArray.length > dimensionSize) {
-        updatedPrimitive.kernelMatrix = getFormattedMatrix(matrixArray.slice(0, dimensionSize).join(' '), kernelX);
-      } else if (matrixArray.length < dimensionSize) {
-        const newKernel = [...matrixArray, ...Array(dimensionSize - matrixArray.length).fill('1')];
-        updatedPrimitive.kernelMatrix = getFormattedMatrix(newKernel.join(' '), kernelX);
+      if (kernelMatrix.length > dimensionSize) {
+        updatedPrimitive.kernelMatrix = kernelMatrix.slice(0, dimensionSize);
+      } else if (kernelMatrix.length < dimensionSize) {
+        updatedPrimitive.kernelMatrix = [...kernelMatrix, ...Array(dimensionSize - kernelMatrix.length).fill('1')];
       }
     }
   }
@@ -99,13 +92,12 @@ const updateKernelElement = (primitives, {
   const primitiveIndex = primitives.findIndex(({id}) => primitiveId === id);
   const primitive = primitives[primitiveIndex];
 
-  const matrixArray = primitive.kernelMatrix.trimRight().split(/\r|\s/g);
-  matrixArray[index] = value;
+  const updatedMatrix = [...primitive.kernelMatrix];
+  updatedMatrix[index] = value;
 
   const updatedPrimitive = {
     ...primitive,
-    // kernelMatrix: getFormattedMatrix(matrixArray.join(' '), primitive.kernelX).trimRight()
-    kernelMatrix: matrixArray.join(' ').trimRight()
+    kernelMatrix: updatedMatrix
   };
 
   return [
@@ -154,16 +146,14 @@ const filter = (state = initialState, action) => {
       //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       case ActionType.FILTER_MATRIX_FORMAT: {
-        const {
-          value,
-          kernelX
-        } = action.payload;
-        const formattedMatrix = getFormattedMatrix(value, kernelX);
+        const formattedMatrix = action.payload.value.reduce((acc, el) => {
+          return el ? [...acc, el] : [...acc];
+        }, []);
 
         const updatedPrimitives = updatePrimitive(state.primitives, {
           primitiveId: action.payload.id,
           prop: primitiveActionToPropMap.FILTER_PRIMITIVE_KERNEL_MATRIX_CHANGED,
-          value: formattedMatrix
+          value: formattedMatrix,
         });
 
         return {

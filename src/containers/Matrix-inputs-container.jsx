@@ -13,22 +13,28 @@ const MatrixInputsContainer = (props) => {
     kernelX,
     kernelY,
     kernelMatrix,
-    onKernelMatrixElementChange
+    onKernelMatrixElementChange,
+    ...rest
   } = props;
 
   return (
     <MatrixInputs
       id={id}
-      sizeX={kernelX}
-      sizeY={kernelY}
-      matrix={kernelMatrix}
+      kernelX={kernelX}
+      kernelY={kernelY}
+      kernelMatrix={kernelMatrix}
       onKernelMatrixElementChange={onKernelMatrixElementChange}
+      {...rest}
     />
   );
 };
 
 MatrixInputsContainer.propTypes = {
- // TODO
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  kernelX: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([''])]),
+  kernelY: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([''])]),
+  kernelMatrix: PropTypes.array,
+  onKernelMatrixElementChange: PropTypes.func
 };
 
 const mapDispatchToProps = (dispatch) => {

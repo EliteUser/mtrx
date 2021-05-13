@@ -6,14 +6,16 @@ export const toPercentageScale = (min, max, twoSided, value) => {
   }
 };
 
-export const getFormattedMatrix = (matrixString, kernelX) => {
-  const matrixArray = matrixString.replace(/\s+/gi, ' ').split(' ');
-
+export const getFormattedMatrixString = (kernelMatrix, kernelX) => {
+  const matrixArray = kernelMatrix.map((el) => el.trim());
   let caretIndex = kernelX - 1;
+
   for (let index = 0; index < matrixArray.length; index++) {
     const element = matrixArray[index];
 
-    if (index === caretIndex && index !== matrixArray.length) {
+    if (index === matrixArray.length - 1) {
+      matrixArray[index] = `${element}`;
+    } else if (index === caretIndex) {
       caretIndex += kernelX;
       matrixArray[index] = `${element}\r`;
     } else {

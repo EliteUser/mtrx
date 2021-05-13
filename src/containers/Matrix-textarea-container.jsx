@@ -6,23 +6,25 @@ import {connect} from 'react-redux';
 
 import MatrixTextarea from '../components/Matrix-textarea';
 import {formatMatrix} from '../store/actions';
+import {getFormattedMatrixString} from '../utils/utils';
 
 const MatrixTextareaContainer = (props) => {
   const {
-    value,
+    kernelMatrix,
     kernelX,
     primitiveId,
     onMatrixFormat,
     ...rest
   } = props;
 
+  const matrixString = getFormattedMatrixString(kernelMatrix, kernelX);
   const onFormat = () => {
-    return onMatrixFormat(value, kernelX, primitiveId);
+    return onMatrixFormat(kernelMatrix, primitiveId);
   };
 
   return (
     <MatrixTextarea
-      value={value}
+      value={matrixString}
       onMatrixFormat={onFormat}
       {...rest}
     />
@@ -30,7 +32,7 @@ const MatrixTextareaContainer = (props) => {
 };
 
 MatrixTextareaContainer.propTypes = {
-  value: PropTypes.string,
+  kernelMatrix: PropTypes.array,
   kernelX: PropTypes.number,
   primitiveId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onMatrixFormat: PropTypes.func

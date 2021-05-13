@@ -18,9 +18,9 @@ const SvgFilter = (props) => {
           colorInterpolationFilters="sRGB"
         >
           {
-            primitives.map((primitive, index) => {
-              // TODO remove index and add primitive id (generate in mw)
+            primitives.map((primitive) => {
               const {
+                id,
                 kernelX,
                 kernelY,
                 kernelMatrix,
@@ -29,10 +29,10 @@ const SvgFilter = (props) => {
               } = primitive;
 
               return <SvgFilterPrimitive
-                key={index}
+                key={id}
                 kernelX={kernelX}
                 kernelY={kernelY}
-                kernelMatrix={kernelMatrix}
+                kernelMatrix={kernelMatrix.join(' ')}
                 divisor={divisor}
                 bias={bias}
               />;

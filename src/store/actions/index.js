@@ -105,12 +105,11 @@ export const setBias = (value, primitiveId) => {
   };
 };
 
-export const formatMatrix = (value, kernelX, primitiveId) => {
+export const formatMatrix = (kernelMatrix, primitiveId) => {
   return {
     type: ActionType.FILTER_MATRIX_FORMAT,
     payload: {
-      value: value,
-      kernelX: kernelX,
+      value: kernelMatrix,
       id: primitiveId
     }
   };

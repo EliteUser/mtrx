@@ -25,7 +25,6 @@ const Input = (props) => {
   inputClass = inputClass.join(' ');
 
   const onWheel = (evt) => {
-    console.log(evt);
     evt.preventDefault();
     const value = evt.target.value;
     const increment = evt.deltaY > 0 ? -step : step;

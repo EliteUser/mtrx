@@ -16,7 +16,7 @@ export const DEFAULT_PRIMITIVE = {
   id: '1',
   kernelX: 3,
   kernelY: 3,
-  kernelMatrix: '1 1 1\r1 1 1\r1 1 1',
+  kernelMatrix: ['1', '1', '1\r', '1', '1', '1\r', '1', '1', '1'],
   divisor: 9,
   bias: 0
 };

@@ -89,7 +89,7 @@ const ControlsWorkarea = (props) => {
           isAdvancedMode ?
             <div className={`${style['controls-workarea__matrix-textarea']}`}>
               <MatrixTextareaContainer
-                value={kernelMatrix}
+                kernelMatrix={kernelMatrix}
                 kernelX={kernelX}
                 primitiveId={id}
                 name={'matrix'}
@@ -131,8 +131,6 @@ const ControlsWorkarea = (props) => {
                 <AdvancedModeIcon/>
             }
           </Button>
-
-
         </div>
 
       </div>

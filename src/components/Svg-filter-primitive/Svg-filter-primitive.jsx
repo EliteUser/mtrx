@@ -33,11 +33,11 @@ const SvgFilterPrimitive = (props) => {
 };
 
 SvgFilterPrimitive.propTypes = {
-  kernelX: PropTypes.number,
-  kernelY: PropTypes.number,
+  kernelX: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([''])]),
+  kernelY: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([''])]),
   kernelMatrix: PropTypes.string,
-  divisor: PropTypes.number,
-  bias: PropTypes.number
+  divisor: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([''])]),
+  bias: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([''])]),
 };
 
 export default SvgFilterPrimitive;

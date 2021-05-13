@@ -7,13 +7,11 @@ import Input from '../Input';
 const MatrixInputs = (props) => {
   const {
     id,
-    sizeX,
-    sizeY,
-    matrix,
+    kernelX,
+    kernelY,
+    kernelMatrix,
     onKernelMatrixElementChange
   } = props;
-
-  const matrixArray = matrix.trimRight().split(/\r|\s/g);
 
   const onChange = (evt) => {
     const value = evt.target.value;
@@ -23,8 +21,8 @@ const MatrixInputs = (props) => {
   };
 
   const matrixStyles = {
-    gridTemplateColumns: `repeat(${sizeX}, 60px)`,
-    gridTemplateRows: `repeat(${sizeY}, 40px)`
+    gridTemplateColumns: `repeat(${kernelX}, 60px)`,
+    gridTemplateRows: `repeat(${kernelY}, 40px)`
   };
 
   return (
@@ -32,7 +30,7 @@ const MatrixInputs = (props) => {
       className={style['matrix-inputs']}
       style={matrixStyles}>
       {
-        Array(sizeX * sizeY)
+        Array(kernelX * kernelY)
           .fill(null)
           .map((el, index) => {
             return (
@@ -40,7 +38,7 @@ const MatrixInputs = (props) => {
                 key={index}
                 id={index}
                 step={0.1}
-                value={matrixArray[index]}
+                value={kernelMatrix[index]}
                 onChange={onChange}
               />
             );
@@ -50,6 +48,12 @@ const MatrixInputs = (props) => {
   );
 };
 
-MatrixInputs.propTypes = {};
+MatrixInputs.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  kernelX: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([''])]),
+  kernelY: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([''])]),
+  kernelMatrix: PropTypes.array,
+  onKernelMatrixElementChange: PropTypes.func
+};
 
 export default MatrixInputs;
