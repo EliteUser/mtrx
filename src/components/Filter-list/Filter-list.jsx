@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import style from './Filter-list.module.scss';
 
@@ -10,23 +10,6 @@ const FilterList = (props) => {
     onFilterChange,
     onFilterReset,
   } = props;
-
-
-  // const onFilterChange = (filterType) => useCallback(
-  //   (...[, value]) => setFilters((state) => ({
-  //     ...state,
-  //     [filterType]: value
-  //   })),
-  //   []
-  // );
-
-  // const onResetClick = (filterType) => useCallback(
-  //   () => setFilters((state) => ({
-  //     ...state,
-  //     [filterType]: defaultFilterValues[filterType]
-  //   })),
-  //   []
-  // );
 
   return (
     <div className={style['filter-list']}>
@@ -64,6 +47,10 @@ const FilterList = (props) => {
   );
 };
 
-FilterList.propTypes = {};
+FilterList.propTypes = {
+  filters: PropTypes.object,
+  onFilterChange: PropTypes.func,
+  onFilterReset: PropTypes.func,
+};
 
 export default FilterList;
