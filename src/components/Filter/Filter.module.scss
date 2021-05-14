@@ -27,12 +27,16 @@
 .filter__btn {
   grid-area: button;
 
-
   margin-left: auto;
   width: 30px;
   height: 30px;
   padding: 0;
   align-self: flex-end;
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--bg-layer-mid);
+  }
 
   svg {
     height: 16px;
