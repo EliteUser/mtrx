@@ -8,8 +8,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 46px;
-  height: 46px;
+  width: 50px;
+  height: 50px;
   background-color: var(--accent);
   border-radius: 50%;
   cursor: pointer;
@@ -20,8 +20,7 @@
 
   svg {
     fill: var(--color-light);
-    width: 40px;
-    height: 30px;
+    height: 36px;
   }
 
   &:active {
