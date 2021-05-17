@@ -7,12 +7,14 @@
 }
 
 .image-workarea__save-btn {
+  background-color: var(--bg-layer-low);
   position: absolute;
   right: 10px;
   top: 10px;
 }
 
 .image-workarea__preview-btn {
+  background-color: var(--bg-layer-low);
   position: absolute;
   right: 10px;
   bottom: 10px;

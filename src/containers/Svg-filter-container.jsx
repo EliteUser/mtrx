@@ -4,19 +4,12 @@ import PropTypes from 'prop-types';
 import {bindActionCreators, compose} from 'redux';
 import {connect} from 'react-redux';
 
-import {updateCanvas} from '../store/actions';
-
 import SvgFilter from '../components/Svg-filter';
 
 const SvgFilterContainer = (props) => {
   const {
-    primitives,
-    updateCanvas
+    primitives
   } = props;
-
-  useEffect(() => {
-    updateCanvas();
-  }, [primitives]);
 
   return (
     <SvgFilter primitives={primitives}/>
@@ -35,12 +28,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-    updateCanvas: updateCanvas
-  }, dispatch);
-};
-
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps)
 )(SvgFilterContainer);

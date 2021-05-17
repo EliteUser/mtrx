@@ -52,10 +52,11 @@ const CanvasContainer = (props) => {
         const height = sourceImage.naturalHeight;
 
         const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', {alpha: false});
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.filter = filterString ? filterString : 'none';
+
         ctx.drawImage(sourceImage, 0, 0, width, height);
       }
     });

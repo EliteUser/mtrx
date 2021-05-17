@@ -1,0 +1,142 @@
+.preset {
+  width: 100px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--color-light);
+}
+
+.preset__selector {
+  padding: 0;
+  margin-bottom: 5px;
+  color: inherit;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  transition: 0.2s ease-in-out;
+  border-radius: 6px;
+  cursor: pointer;
+
+  &--selected {
+    box-shadow: 0 0 0 2px var(--color-light);
+  }
+
+  &:hover,
+  &:focus-visible {
+    opacity: 0.75;
+  }
+}
+
+.preset__wrapper {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  perspective: 1000px;
+
+  &--front {
+    .preset__front {
+      transform: rotateX(0deg);
+    }
+
+    .preset__back {
+      transform: rotateX(180deg);
+    }
+  }
+
+  &--back {
+    .preset__front {
+      transform: rotateX(180deg);
+    }
+
+    .preset__back {
+      transform: rotateX(360deg);
+    }
+  }
+}
+
+.preset__front,
+.preset__back {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--accent);
+  border-radius: 6px;
+  backface-visibility: hidden;
+  transition: 0.5s ease-in-out;
+}
+
+.preset__front {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 5px 30px 5px;
+  justify-content: center;
+}
+
+.preset__name {
+  margin: 0;
+  overflow: hidden;
+  text-transform: uppercase;
+  word-break: break-all;
+}
+
+.preset__icon {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+
+  svg {
+    color: var(--accent);
+    fill: var(--color-light);
+  }
+}
+
+.preset__back {
+  transform: rotateX(180deg);
+  overflow: hidden;
+}
+
+.preset__description {
+  padding: 5px;
+  margin: 0;
+  max-height: 100%;
+  max-width: 100%;
+  overflow-y: scroll;
+  word-break: break-word;
+  font-size: 12px;
+  text-align: left;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-light);
+    border-radius: 2px;
+  }
+}
+
+.preset__toggle {
+  width: 36px;
+  height: 36px;
+  transform: rotateX(180deg);
+  transition: 0.2s ease-in-out;
+
+  &--active {
+    transform: rotateX(0deg);
+  }
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--bg-layer-mid);
+  }
+}

@@ -177,3 +177,15 @@ export const resetFilter = (filterName) => {
     }
   };
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const selectPreset = (presetId) => {
+  return {
+    type: ActionType.PRESET_SELECT,
+    payload: {
+      id: presetId
+    }
+  };
+};
+

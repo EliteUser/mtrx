@@ -10,6 +10,8 @@ import EditorTabpanel from '../../Editor-tabpanel';
 
 import {ReactComponent as TextLogo} from '../../../../public/assets/logo-t.svg';
 import ImageWorkareaContainer from '../../../containers/Image-workarea-container';
+
+import PresetListContainer from '../../../containers/Preset-list-container';
 import ControlsWorkareaContainer from '../../../containers/Controls-workarea-container';
 import FilterListContainer from '../../../containers/Filter-list-container';
 
@@ -17,7 +19,7 @@ const getControls = (tabName) => {
   let componentToRender = null;
   switch (tabName) {
     case EditorTab.PRESETS: {
-
+      componentToRender = <PresetListContainer/>;
       break;
     }
     case EditorTab.MTRX: {

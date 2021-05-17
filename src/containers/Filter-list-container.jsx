@@ -15,7 +15,9 @@ const FilterListContainer = (props) => {
   } = props;
 
   const onChange = (filterName) => useCallback(
-    (...[, value]) => onFilterChange(value, filterName),
+    (...[, value]) => requestAnimationFrame(() => {
+      return onFilterChange(value, filterName);
+    }),
     []
   );
 

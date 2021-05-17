@@ -1,6 +1,21 @@
+import {filterValueToStringMap} from '../config';
+
 export const getFiltersProp = (filterConfig, propName) => {
   return Object.entries(filterConfig)
     .reduce((acc, el) => Object.assign(acc, {[el[0]]: el[1][propName]}), {});
+};
+
+export const getFilterString = (filters) => {
+  const filterValues = getFiltersProp(filters, 'value');
+  const filtersString = Object.entries(filterValues).reduce((acc, el) => {
+    const key = el[0];
+    const value = el[1];
+
+    acc = `${acc} ${filterValueToStringMap[key](value)}`;
+    return acc.trim();
+  }, '');
+
+  return `url(#filter) ${filtersString}`;
 };
 
 export const toPercentageScale = (min, max, twoSided, value) => {

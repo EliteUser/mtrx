@@ -7,11 +7,11 @@ import {
   MAX_KERNEL_SIZE,
   MIN_KERNEL_SIZE,
   filterConfig,
-  filterValueToStringMap,
+  presetConfig
 } from '../../config';
 
 import {
-  getFiltersProp,
+  getFilterString,
   formatPositiveInteger,
   rangeValue,
   replaceDecimals
@@ -19,32 +19,18 @@ import {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const getFilterString = (filters) => {
-  const filterValues = getFiltersProp(filters, 'value');
-  const filtersString = Object.entries(filterValues).reduce((acc, el) => {
-    const key = el[0];
-    const value = el[1];
-
-    acc = `${acc} ${filterValueToStringMap[key](value)}`;
-    return acc.trim();
-  }, '');
-
-  return `url(#filter) ${filtersString}`;
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-const initialFilterConfig = deepClone(filterConfig);
 const initialState = {
-  filterString: getFilterString(initialFilterConfig),
+  filterString: getFilterString(filterConfig),
   selectedPrimitive: '1',
+  selectedPreset: null,
   defaultPrimitives: [
     {...DEFAULT_PRIMITIVE}
   ],
   primitives: [
     {...DEFAULT_PRIMITIVE}
   ],
-  filters: initialFilterConfig
+  filters: filterConfig,
+  presets: presetConfig
 };
 
 const primitiveActionToPropMap = {
@@ -267,6 +253,26 @@ const filter = (state = initialState, action) => {
           filterString: getFilterString(updatedFilters),
           filters: updatedFilters
         };
+      }
+
+      case ActionType.PRESET_SELECT: {
+        const selectedPresetId = action.payload.id;
+
+        if (state.selectedPreset === selectedPresetId) {
+          return deepClone(initialState);
+        } else {
+          const preset = presetConfig.find(({id}) => id === selectedPresetId);
+          const presetPrimitives = deepClone(preset.primitives);
+          const presetFilters = deepClone(preset.filters);
+
+          return {
+            ...state,
+            selectedPreset: selectedPresetId,
+            primitives: presetPrimitives,
+            filters: presetFilters,
+            selectedPrimitive: presetPrimitives[0].id
+          };
+        }
       }
 
       default: {
