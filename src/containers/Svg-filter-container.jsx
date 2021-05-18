@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import {bindActionCreators, compose} from 'redux';
+import {compose} from 'redux';
 import {connect} from 'react-redux';
 
 import SvgFilter from '../components/Svg-filter';
@@ -17,8 +17,7 @@ const SvgFilterContainer = (props) => {
 };
 
 SvgFilterContainer.propTypes = {
-  primitives: PropTypes.array,
-  updateCanvas: PropTypes.func
+  primitives: PropTypes.array
 };
 
 const mapStateToProps = (state) => {

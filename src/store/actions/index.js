@@ -139,12 +139,6 @@ export const removeCanvasRef = () => {
   };
 };
 
-export const updateCanvas = () => {
-  return {
-    type: ActionType.UPDATE_CANVAS
-  };
-};
-
 export const saveImage = () => {
   return {
     type: ActionType.SAVE_IMAGE

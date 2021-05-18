@@ -7,6 +7,8 @@ import {connect} from 'react-redux';
 import FilterList from '../components/Filter-list';
 import {setFilter, resetFilter} from '../store/actions';
 
+import throttle from 'lodash.throttle';
+
 const FilterListContainer = (props) => {
   const {
     filters,
@@ -14,9 +16,10 @@ const FilterListContainer = (props) => {
     onFilterReset,
   } = props;
 
+  const throttled = throttle(onFilterChange, 100);
   const onChange = (filterName) => useCallback(
     (...[, value]) => requestAnimationFrame(() => {
-      return onFilterChange(value, filterName);
+      return throttled(value, filterName);
     }),
     []
   );
