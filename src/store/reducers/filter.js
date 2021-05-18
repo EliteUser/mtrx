@@ -106,7 +106,7 @@ const updateKernelElement = (primitives, {
   const primitive = primitives[primitiveIndex];
 
   const updatedMatrix = [...primitive.kernelMatrix];
-  updatedMatrix[index] = value;
+  updatedMatrix[index] = replaceDecimals(value);
 
   const updatedPrimitive = {
     ...primitive,

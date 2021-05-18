@@ -27,7 +27,8 @@ const SvgFilterPrimitive = (props) => {
         edgeMode="duplicate"
         preserveAlpha="true"
         in="SourceGraphic"
-        result="convolveMatrix"/>
+        result="convolveMatrix"
+      />
     </React.Fragment>
   );
 };
