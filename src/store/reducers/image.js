@@ -2,8 +2,7 @@ import {ActionType} from '../actions/types';
 
 const initialState = {
   imageFile: null,
-  sourceImage: null,
-  canvasRef: null
+  sourceImage: null
 };
 
 const image = (state = initialState, action) => {
@@ -22,22 +21,7 @@ const image = (state = initialState, action) => {
       };
     }
 
-    case ActionType.SET_CANVAS_REF: {
-      return {
-        ...state,
-        canvasRef: action.payload
-      };
-    }
-
-    case ActionType.REMOVE_CANVAS_REF: {
-      return {
-        ...state,
-        canvasRef: null
-      };
-    }
-
     case ActionType.SAVE_IMAGE: {
-      const canvas = state.canvasRef.current;
 
       const download = (href, name) => {
         const link = document.createElement('a');
@@ -45,7 +29,19 @@ const image = (state = initialState, action) => {
         link.href = href;
         link.click();
         link.remove();
+        canvas.remove();
       };
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d', {alpha: false});
+
+      const sourceImage = state.sourceImage;
+
+      canvas.width = sourceImage.width;
+      canvas.height = sourceImage.height;
+
+      ctx.filter = action.payload.filter;
+      ctx.drawImage(sourceImage, 0, 0, canvas.width, canvas.height);
 
       canvas.toBlob((blob) => {
         const URLObj = window.URL || window.webkitURL;

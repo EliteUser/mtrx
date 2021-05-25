@@ -126,22 +126,12 @@ export const resetMatrix = (primitiveId) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const setCanvasRef = (value) => {
+export const saveImage = (filter) => {
   return {
-    type: ActionType.SET_CANVAS_REF,
-    payload: value
-  };
-};
-
-export const removeCanvasRef = () => {
-  return {
-    type: ActionType.REMOVE_CANVAS_REF
-  };
-};
-
-export const saveImage = () => {
-  return {
-    type: ActionType.SAVE_IMAGE
+    type: ActionType.SAVE_IMAGE,
+    payload: {
+      filter
+    }
   };
 };
 

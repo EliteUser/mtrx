@@ -11,12 +11,17 @@ const ImageWorkareaContainer = (props) => {
   const {
     onSaveImage,
     onTogglePreview,
+    filterString,
     filterApplied
   } = props;
 
+  const onSave = () => {
+    return onSaveImage(filterString);
+  };
+
   return (
     <ImageWorkarea
-      onSaveImage={onSaveImage}
+      onSaveImage={onSave}
       onTogglePreview={onTogglePreview}
       filterApplied={filterApplied}
     />
@@ -26,12 +31,18 @@ const ImageWorkareaContainer = (props) => {
 ImageWorkareaContainer.propTypes = {
   onSaveImage: PropTypes.func,
   onTogglePreview: PropTypes.func,
+  filterString: PropTypes.string,
   filterApplied: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => {
+  const {
+    filterString,
+    filterApplied
+  } = state.filter;
   return {
-    filterApplied: !!state.filter.filterString
+    filterString,
+    filterApplied
   };
 };
 

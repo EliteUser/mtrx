@@ -21,6 +21,7 @@ import {
 
 const initialState = {
   filterString: getFilterString(filterConfig),
+  filterApplied: true,
   selectedPrimitive: '1',
   selectedPreset: null,
   defaultPrimitives: [
@@ -218,11 +219,12 @@ const filter = (state = initialState, action) => {
       //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       case ActionType.TOGGLE_FILTER: {
-        const filter = state.filterString.length ? '' : getFilterString(state.filters);
+        // const filter = state.filterString.length ? '' : getFilterString(state.filters);
+        const filterApplied = state.filterApplied;
 
         return {
           ...state,
-          filterString: filter
+          filterApplied: !filterApplied
         };
       }
 

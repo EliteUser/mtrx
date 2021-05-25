@@ -5,9 +5,7 @@ import {compose, bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import Canvas from '../components/Canvas';
-import {setImage, setCanvasRef, removeCanvasRef} from '../store/actions';
-
-import {getScaleCoefficient} from '../utils/utils';
+import {setImage} from '../store/actions';
 
 const CanvasContainer = (props) => {
   const canvasRef = useRef(null);
@@ -15,15 +13,12 @@ const CanvasContainer = (props) => {
     imageFile,
     sourceImage,
     filterString,
+    filterApplied,
     setImage,
-    setRef,
-    removeRef,
     primitives
   } = props;
 
   useEffect(() => {
-    setRef(canvasRef);
-
     const URLObj = window.URL || window.webkitURL;
 
     const image = new Image();
@@ -35,16 +30,13 @@ const CanvasContainer = (props) => {
 
       const canvas = canvasRef.current;
 
-      const rescale = getScaleCoefficient(width, height);
-      console.log(width, height, width * height, rescale);
-      canvas.width = width / rescale;
-      canvas.height = height / rescale;
+      canvas.width = width;
+      canvas.height = height;
 
       setImage(image);
     };
 
     return (() => {
-      removeRef();
       setImage(null);
     });
   }, []);
@@ -56,11 +48,11 @@ const CanvasContainer = (props) => {
         const ctx = canvas.getContext('2d', {alpha: false});
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.filter = filterString ? filterString : 'none';
+        ctx.filter = filterApplied ? filterString : 'none';
         ctx.drawImage(sourceImage, 0, 0, canvas.width, canvas.height);
       }
     });
-  }, [filterString, sourceImage, primitives]);
+  }, [filterString, filterApplied, sourceImage, primitives]);
 
   return (
     <Canvas ref={canvasRef}/>
@@ -71,10 +63,9 @@ CanvasContainer.propTypes = {
   imageFile: PropTypes.object,
   sourceImage: PropTypes.object,
   filterString: PropTypes.string,
+  filterApplied: PropTypes.bool,
   primitives: PropTypes.array,
   setImage: PropTypes.func.isRequired,
-  setRef: PropTypes.func.isRequired,
-  removeRef: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -85,12 +76,14 @@ const mapStateToProps = (state) => {
 
   const {
     filterString,
+    filterApplied,
     primitives
   } = state.filter;
   return {
     imageFile,
     sourceImage,
     filterString,
+    filterApplied,
     primitives
   };
 };
@@ -98,8 +91,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     setImage: setImage,
-    setRef: setCanvasRef,
-    removeRef: removeCanvasRef
   }, dispatch);
 };
 
