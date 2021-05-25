@@ -72,3 +72,21 @@ export const replaceDecimals = (value) => {
     .replace(/^-\./, '-0.');
 };
 
+export const getScaleCoefficient = (width, height) => {
+  // Get rescale coefficient for canvas
+  // width * height in pixels / 1 000 000. For 3000x4000 (12 Mp) = 12
+  const size = width * height / Math.pow(10, 6);
+  let rescale = 1;
+
+  if (size >= 1 && size < 6) {
+    rescale = 2;
+  } else if (size >= 6 && size < 12) {
+    rescale = 4;
+  } else if (size >= 12 && size < 24) {
+    rescale = 5;
+  } else if (size >= 24) {
+    rescale = 8;
+  }
+
+  return rescale;
+};

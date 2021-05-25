@@ -7,6 +7,8 @@ import {connect} from 'react-redux';
 import Canvas from '../components/Canvas';
 import {setImage, setCanvasRef, removeCanvasRef} from '../store/actions';
 
+import {getScaleCoefficient} from '../utils/utils';
+
 const CanvasContainer = (props) => {
   const canvasRef = useRef(null);
   const {
@@ -33,8 +35,10 @@ const CanvasContainer = (props) => {
 
       const canvas = canvasRef.current;
 
-      canvas.width = width;
-      canvas.height = height;
+      const rescale = getScaleCoefficient(width, height);
+      console.log(width, height, width * height, rescale);
+      canvas.width = width / rescale;
+      canvas.height = height / rescale;
 
       setImage(image);
     };
