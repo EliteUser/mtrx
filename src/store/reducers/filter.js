@@ -271,6 +271,7 @@ const filter = (state = initialState, action) => {
             ...state,
             selectedPreset: selectedPresetId,
             primitives: presetPrimitives,
+            filterString: getFilterString(presetFilters),
             filters: presetFilters,
             selectedPrimitive: presetPrimitives[0].id
           };
