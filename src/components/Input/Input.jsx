@@ -2,7 +2,8 @@ import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import style from './Input.module.scss';
 
-// TODO CUSTOM ARROW UP/DOWN KEYS
+import Button from '../Button';
+import {ReactComponent as ArrowIcon} from '../../../public/assets/icon-arrow.svg';
 
 const Input = (props) => {
   const {
@@ -61,8 +62,30 @@ const Input = (props) => {
       return;
     }
 
+    if (evt.shiftKey) {
+      increment *= 10;
+    }
+
     evt.target.value = (parseFloat(value) + increment).toFixed(1);
     return onChange(evt);
+  };
+
+  const onArrowKeyClick = (direction) => {
+    const input = inputRef.current;
+
+    let key = null;
+
+    if (direction === 'up') {
+      key = 'ArrowUp';
+    } else if (direction === 'down') {
+      key = 'ArrowDown';
+    }
+
+    // Dispatch keyboard event to bind target and value then call existing onKeyDown handler
+    const evt = new KeyboardEvent('keydown', {key: key});
+    input.dispatchEvent(evt);
+
+    onKeyDown(evt);
   };
 
   return (
@@ -75,6 +98,7 @@ const Input = (props) => {
           </label> :
           null
       }
+
       <input
         lang={'en-US'}
         ref={inputRef}
@@ -89,6 +113,26 @@ const Input = (props) => {
 
         onKeyDown={onKeyDown}
       />
+
+      <div className={style['number-input__buttons']}>
+        <Button
+          className={`${style['number-input__button']} ${style['number-input__button--up']}`}
+          text={'Increase value'}
+          isTextHidden={true}
+          onBtnClick={() => onArrowKeyClick('up')}
+        >
+          <ArrowIcon/>
+        </Button>
+        <Button
+          className={`${style['number-input__button']} ${style['number-input__button--down']}`}
+          text={'Decrease value'}
+          isTextHidden={true}
+          onBtnClick={() => onArrowKeyClick('down')}
+        >
+          <ArrowIcon/>
+        </Button>
+      </div>
+
     </div>
   );
 };
