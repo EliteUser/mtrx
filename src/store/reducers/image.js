@@ -22,6 +22,8 @@ const image = (state = initialState, action) => {
     }
 
     case ActionType.SAVE_IMAGE: {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d', {alpha: false});
 
       const download = (href, name) => {
         const link = document.createElement('a');
@@ -31,9 +33,6 @@ const image = (state = initialState, action) => {
         link.remove();
         canvas.remove();
       };
-
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d', {alpha: false});
 
       const sourceImage = state.sourceImage;
 
