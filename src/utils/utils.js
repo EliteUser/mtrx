@@ -83,9 +83,9 @@ export const getScaleCoefficient = (width, height) => {
   } else if (size >= 6 && size < 12) {
     rescale = 4;
   } else if (size >= 12 && size < 24) {
-    rescale = 5;
+    rescale = 6;
   } else if (size >= 24) {
-    rescale = 8;
+    rescale = 10;
   }
 
   return rescale;

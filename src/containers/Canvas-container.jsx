@@ -1,21 +1,30 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
 
 import {compose, bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import Canvas from '../components/Canvas';
-import {setImage} from '../store/actions';
+import {setImage, setRendering} from '../store/actions';
+
+import Loader from '../components/Loader';
+import {getScaleCoefficient} from '../utils/utils';
 
 const CanvasContainer = (props) => {
   const canvasRef = useRef(null);
+
+  const [initialSize, setInitialSize] = useState(null);
+  const [repaintTimeout, setRepaintTimeout] = useState(null);
+
   const {
     imageFile,
     sourceImage,
     filterString,
     filterApplied,
     setImage,
-    primitives
+    primitives,
+    isRendering,
+    setRendering
   } = props;
 
   useEffect(() => {
@@ -27,6 +36,11 @@ const CanvasContainer = (props) => {
     image.onload = () => {
       const width = image.naturalWidth;
       const height = image.naturalHeight;
+
+      setInitialSize({
+        width,
+        height
+      });
 
       const canvas = canvasRef.current;
 
@@ -43,19 +57,53 @@ const CanvasContainer = (props) => {
 
   useEffect(() => {
     requestAnimationFrame(() => {
-      if (sourceImage) {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d', {alpha: false});
+      try {
+        if (repaintTimeout) {
+          clearTimeout(repaintTimeout);
+        }
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.filter = filterApplied ? filterString : 'none';
-        ctx.drawImage(sourceImage, 0, 0, canvas.width, canvas.height);
+        if (sourceImage) {
+          const canvas = canvasRef.current;
+          const ctx = canvas.getContext('2d', {alpha: false});
+
+          const scale = getScaleCoefficient(initialSize.width, initialSize.height);
+
+          canvas.width = initialSize.width / scale;
+          canvas.height = initialSize.height / scale;
+
+          ctx.filter = filterApplied ? filterString : 'none';
+          ctx.drawImage(sourceImage, 0, 0, canvas.width, canvas.height);
+
+          const paintTimeout = setTimeout(() => {
+            setTimeout(() => {
+              setRendering(true);
+            }, 0);
+
+            setTimeout(() => {
+              canvas.width = initialSize.width;
+              canvas.height = initialSize.height;
+
+              ctx.filter = filterApplied ? filterString : 'none';
+              ctx.drawImage(sourceImage, 0, 0, canvas.width, canvas.height);
+
+              setRendering(false);
+            }, 20);
+          }, 700);
+
+          setRepaintTimeout(paintTimeout);
+        }
+      } catch (err) {
+        setRendering(false);
+        console.log(err);
       }
     });
   }, [filterString, filterApplied, sourceImage, primitives]);
 
   return (
-    <Canvas ref={canvasRef}/>
+    <React.Fragment>
+      {isRendering ? <Loader/> : null}
+      <Canvas ref={canvasRef}/>
+    </React.Fragment>
   );
 };
 
@@ -66,12 +114,14 @@ CanvasContainer.propTypes = {
   filterApplied: PropTypes.bool,
   primitives: PropTypes.array,
   setImage: PropTypes.func.isRequired,
+  isRendering: PropTypes.bool
 };
 
 const mapStateToProps = (state) => {
   const {
     imageFile,
     sourceImage,
+    isRendering
   } = state.image;
 
   const {
@@ -84,13 +134,15 @@ const mapStateToProps = (state) => {
     sourceImage,
     filterString,
     filterApplied,
-    primitives
+    primitives,
+    isRendering
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     setImage: setImage,
+    setRendering: setRendering
   }, dispatch);
 };
 

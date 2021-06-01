@@ -24,4 +24,5 @@ export const ActionType = {
 
   UPDATE_CANVAS: 'UPDATE_CANVAS',
   SAVE_IMAGE: 'SAVE_IMAGE',
+  SET_RENDERING: 'SET_RENDERING'
 };

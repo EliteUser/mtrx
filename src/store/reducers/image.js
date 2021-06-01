@@ -2,7 +2,8 @@ import {ActionType} from '../actions/types';
 
 const initialState = {
   imageFile: null,
-  sourceImage: null
+  sourceImage: null,
+  isRendering: true,
 };
 
 const image = (state = initialState, action) => {
@@ -18,6 +19,13 @@ const image = (state = initialState, action) => {
       return {
         ...state,
         sourceImage: action.payload
+      };
+    }
+
+    case ActionType.SET_RENDERING: {
+      return {
+        ...state,
+        isRendering: action.payload.state
       };
     }
 

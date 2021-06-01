@@ -141,6 +141,15 @@ export const toggleFilter = () => {
   };
 };
 
+export const setRendering = (state) => {
+  return {
+    type: ActionType.SET_RENDERING,
+    payload: {
+      state
+    }
+  };
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const setFilter = (value, filterName) => {

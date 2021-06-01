@@ -5,26 +5,39 @@ import {compose, bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import ImageWorkarea from '../components/Image-workarea';
-import {saveImage, toggleFilter} from '../store/actions';
+import {saveImage, setRendering, toggleFilter} from '../store/actions';
+import Loader from '../components/Loader';
 
 const ImageWorkareaContainer = (props) => {
   const {
     onSaveImage,
     onTogglePreview,
     filterString,
-    filterApplied
+    filterApplied,
+    setRendering,
+    isRendering
   } = props;
 
   const onSave = () => {
-    return onSaveImage(filterString);
+    setTimeout(() => {
+      setRendering(true);
+    }, 0);
+
+    setTimeout(() => {
+      onSaveImage(filterString);
+      setRendering(false);
+    }, 20);
   };
 
   return (
-    <ImageWorkarea
-      onSaveImage={onSave}
-      onTogglePreview={onTogglePreview}
-      filterApplied={filterApplied}
-    />
+    <React.Fragment>
+      {isRendering ? <Loader/> : null}
+      <ImageWorkarea
+        onSaveImage={onSave}
+        onTogglePreview={onTogglePreview}
+        filterApplied={filterApplied}
+      />
+    </React.Fragment>
   );
 };
 
@@ -33,6 +46,8 @@ ImageWorkareaContainer.propTypes = {
   onTogglePreview: PropTypes.func,
   filterString: PropTypes.string,
   filterApplied: PropTypes.bool,
+  setRendering: PropTypes.func,
+  isRendering: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => {
@@ -40,16 +55,20 @@ const mapStateToProps = (state) => {
     filterString,
     filterApplied
   } = state.filter;
+
+  const isRendering = state.image.isRendering;
   return {
     filterString,
-    filterApplied
+    filterApplied,
+    isRendering
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
     onSaveImage: saveImage,
-    onTogglePreview: toggleFilter
+    onTogglePreview: toggleFilter,
+    setRendering: setRendering
   }, dispatch);
 };
 
