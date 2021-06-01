@@ -35,7 +35,7 @@ Button.propTypes = {
   className: PropTypes.string,
   isTextHidden: PropTypes.bool,
   text: PropTypes.string,
-  children: PropTypes.element,
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   onBtnClick: PropTypes.func.isRequired
 };
 

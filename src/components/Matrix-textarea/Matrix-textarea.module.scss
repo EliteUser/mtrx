@@ -35,8 +35,16 @@
   }
 }
 
-.matrix-textarea__btn {
+.matrix-textarea__buttons {
   position: absolute;
   top: 0;
   left: calc(100% + 5px);
+}
+
+.matrix-textarea__btn {
+  margin-bottom: 10px;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 }

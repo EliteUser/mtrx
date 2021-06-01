@@ -19,16 +19,19 @@ const MatrixTextarea = (props) => {
         {...rest}
       />
 
-      <Button
-        onBtnClick={onMatrixFormat}
-        text={'Format matrix input'}
-        isTextHidden={true}
-        className={`${style['matrix-textarea__btn']} ${btnStyle['btn--accent']}`}
-      >
-        {
-          <ReformatIcon/>
-        }
-      </Button>
+      <div className={style['matrix-textarea__buttons']}>
+        <Button
+          onBtnClick={onMatrixFormat}
+          text={'Format matrix input'}
+          isTextHidden={true}
+          className={`${style['matrix-textarea__btn']} ${btnStyle['btn--accent']}`}
+          title={'Format matrix input'}
+        >
+          {
+            <ReformatIcon/>
+          }
+        </Button>
+      </div>
     </div>
   );
 };
