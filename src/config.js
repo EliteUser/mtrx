@@ -1,12 +1,24 @@
 import deepClone from 'lodash.clonedeep';
 
+/* Screen sizes */
+
+export const SCREEN_SM = 320;
+export const SCREEN_TB = 767;
+export const SCREEN_DT = 1199;
+
+/* Matrix sizes */
+
 export const MIN_KERNEL_SIZE = 1;
 export const MAX_KERNEL_SIZE = 10;
+
+/* App screen tabs */
 
 export const AppScreen = {
   ENTRY: 'entry',
   EDITOR: 'editor'
 };
+
+/* Editor screen tabs */
 
 export const EditorTab = {
   PRESETS: 'presets',

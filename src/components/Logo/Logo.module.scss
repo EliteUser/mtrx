@@ -16,11 +16,7 @@
     height: 36px;
   }
 
-  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
-    height: 60px;
-  }
-
-  @media (min-width: $screen-dt + 1) {
+  @media (min-width: $screen-tb + 1) {
     height: 60px;
   }
 }

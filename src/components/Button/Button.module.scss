@@ -5,7 +5,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background-color, color 0.2s;
+  transition-property: background-color, color;
+  transition-duration: 0.2s;
   color: var(--text);
   cursor: pointer;
   width: 36px;

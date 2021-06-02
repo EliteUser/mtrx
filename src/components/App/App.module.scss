@@ -1,5 +1,14 @@
 .app {
   height: 100%;
   display: grid;
-  grid-template-rows: 60px 1fr;
+
+  @media (max-width: $screen-tb) {
+    grid-template-rows: 60px 1fr;
+  }
+
+  @media (min-width: $screen-tb + 1) {
+    grid-template-rows: 100px 1fr;
+  }
 }
+
+
