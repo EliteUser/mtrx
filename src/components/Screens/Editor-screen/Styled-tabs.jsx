@@ -6,7 +6,7 @@ import {withStyles} from '@material-ui/core/styles';
 const StyledTabs = withStyles({
   root: {
     backgroundColor: 'var(--bg-layer-mid)',
-    height: '50px'
+    height: 'var(--tab-height)'
   },
   indicator: {
     height: '4px',

@@ -5,6 +5,10 @@
   flex-direction: column;
   align-items: center;
   color: var(--color-light);
+
+  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
+    width: 160px;
+  }
 }
 
 .preset__selector {
@@ -33,6 +37,11 @@
   width: 100px;
   height: 100px;
   perspective: 1000px;
+
+  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
+    width: 160px;
+    height: 160px;
+  }
 
   &--front {
     .preset__front {
@@ -78,6 +87,10 @@
   align-items: center;
   padding: 5px 5px 30px 5px;
   justify-content: center;
+
+  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
+    padding: 8px 8px 40px 8px;
+  }
 }
 
 .preset__name {
@@ -93,6 +106,11 @@
   right: 5px;
   width: 24px;
   height: 24px;
+
+  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
+    width: 36px;
+    height: 36px;
+  }
 
   svg {
     color: var(--accent);
@@ -115,6 +133,11 @@
   font-size: 12px;
   text-align: left;
 
+  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
+    font-size: 16px;
+    padding: 8px;
+  }
+
   &::-webkit-scrollbar {
     width: 4px;
   }
@@ -130,6 +153,11 @@
   height: 36px;
   transform: rotateX(180deg);
   transition: 0.2s ease-in-out;
+
+  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
+    width: 48px;
+    height: 48px;
+  }
 
   &--active {
     transform: rotateX(0deg);

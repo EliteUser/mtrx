@@ -9,10 +9,11 @@ const FilterSlider = withStyles({
   },
   active: {},
   thumb: {
-    height: 16,
-    width: 16,
+    height: 'var(--slider-thumb-size)',
+    width: 'var(--slider-thumb-size)',
     backgroundColor: 'var(--accent)',
     boxShadow: '0 4px 4px 0 var(--shadow-color)',
+    marginTop: 'var(--slider-thumb-position)',
     '&:focus, &:hover': {
       boxShadow: '0 0 0 8px var(--slider-focus-color)',
     },

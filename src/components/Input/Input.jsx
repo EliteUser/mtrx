@@ -28,7 +28,11 @@ const Input = (props) => {
   const onWheel = (evt) => {
     evt.preventDefault();
     const value = evt.target.value;
-    const increment = evt.deltaY > 0 ? -step : step;
+    let increment = evt.deltaY > 0 ? -step : step;
+
+    if (evt.shiftKey) {
+      increment *= 10;
+    }
 
     evt.target.value = (parseFloat(value) + increment).toFixed(1);
     return onChange(evt);

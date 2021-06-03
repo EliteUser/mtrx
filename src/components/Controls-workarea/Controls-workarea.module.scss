@@ -15,6 +15,10 @@
     background-color: var(--accent);
     border-radius: 2px;
   }
+
+  @media (min-width: $screen-tb + 1) {
+    scroll-snap-type: none;
+  }
 }
 
 .controls-workarea__snap-container {
@@ -36,6 +40,19 @@
     background-color: var(--accent);
     border-radius: 2px;
   }
+
+  @media (min-width: $screen-tb + 1) {
+    &--first {
+      width: 40%;
+      padding-left: 30px;
+    }
+
+    &--second {
+      width: 60%;
+      justify-content: flex-start;
+      padding: 18px 30px 18px 20px;
+    }
+  }
 }
 
 // region Filter controls
@@ -47,6 +64,7 @@
   grid-template-rows: auto;
   width: 280px;
   margin: 0 auto;
+  align-items: center;
 }
 
 .controls-workarea__matrix-size {
@@ -70,6 +88,10 @@
   width: 100%;
   height: 100%;
   padding-right: 80px;
+
+  @media (min-width: $screen-tb + 1) {
+    padding: 4px 90px 4px 0;
+  }
 }
 
 .controls-workarea__matrix-inputs {
@@ -91,6 +113,10 @@
 
   &::-webkit-scrollbar-corner {
     display: none;
+  }
+
+  @media (min-width: $screen-tb + 1) {
+    margin: 0;
   }
 }
 

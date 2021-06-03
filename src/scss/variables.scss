@@ -18,6 +18,10 @@ $screen-dt: 1199px;
   --shadow-color: rgba(0, 0, 0, 0.07);
   --color-light: #F8F8F8;
   --dropzone-color: rgba(75, 146, 227, 0.15);
+
+  --tab-height: 50px;
+  --slider-thumb-size: 16px;
+  --slider-thumb-position: -5px;
 }
 
 html[data-theme='light'] {
@@ -33,3 +37,15 @@ html[data-theme='light'] {
   --color-light: #F8F8F8;
   --dropzone-color: rgba(58, 121, 192, 0.15);
 }
+
+@media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
+  :root {
+    --tab-height: 70px;
+    --slider-thumb-size: 24px;
+    --slider-thumb-position: -10px;
+  }
+}
+
+//@media (min-width: $screen-dt + 1) {
+//  padding: 15px 40px;
+//}

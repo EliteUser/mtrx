@@ -17,6 +17,10 @@
   height: 100%;
   overflow-x: scroll;
 
+  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
+    padding: 10px 30px;
+  }
+
   &::-webkit-scrollbar {
     height: 4px;
   }

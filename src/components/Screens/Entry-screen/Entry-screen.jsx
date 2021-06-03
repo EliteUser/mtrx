@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import style from './Entry-screen.module.scss';
 
 import {SCREEN_DT} from '../../../config';

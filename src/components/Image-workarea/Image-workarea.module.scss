@@ -16,6 +16,11 @@
   right: 10px;
   top: 10px;
   border-radius: 2px;
+
+  @media (min-width: $screen-tb + 1) {
+    right: 15px;
+    top: 15px;
+  }
 }
 
 .image-workarea__preview-btn {
@@ -24,4 +29,9 @@
   right: 10px;
   bottom: 10px;
   border-radius: 2px;
+
+  @media (min-width: $screen-tb + 1) {
+    right: 15px;
+    bottom: 15px;
+  }
 }

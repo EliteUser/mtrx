@@ -37,7 +37,7 @@ const ControlsWorkarea = (props) => {
 
   return (
     <div className={style['controls-workarea']}>
-      <div className={style['controls-workarea__snap-container']}>
+      <div className={`${style['controls-workarea__snap-container']} ${style['controls-workarea__snap-container--first']}`}>
 
         <div className={style['controls-workarea__controls']}>
 
@@ -84,7 +84,7 @@ const ControlsWorkarea = (props) => {
 
       </div>
 
-      <div className={style['controls-workarea__snap-container']}>
+      <div className={`${style['controls-workarea__snap-container']} ${style['controls-workarea__snap-container--second']}`}>
         {
           isAdvancedMode ?
             <div className={`${style['controls-workarea__matrix-textarea']}`}>

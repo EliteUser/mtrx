@@ -25,11 +25,21 @@
     opacity: 0.75;
   }
 
+  @media (min-width: $screen-tb + 1) {
+    width: 48px;
+    height: 48px;
+  }
+
   svg {
     fill: var(--text);
     width: 16px;
     height: 16px;
     transition: fill 0.2s;
+
+    @media (min-width: $screen-tb + 1) {
+      width: 24px;
+      height: 24px;
+    }
   }
 
   &--active {
@@ -48,6 +58,11 @@
     outline: none;
     box-shadow: 0 4px 4px var(--shadow-color), 0 4px 10px var(--shadow-color);
 
+    @media (min-width: $screen-tb + 1) {
+      width: 48px;
+      height: 48px;
+    }
+
     &:hover {
       background-color: var(--accent);
     }
@@ -61,6 +76,11 @@
       width: 16px;
       height: 16px;
       fill: var(--color-light);
+
+      @media (min-width: $screen-tb + 1) {
+        width: 24px;
+        height: 24px;
+      }
     }
   }
 }
