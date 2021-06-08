@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import style from './Image-workarea.module.scss';
 
+import {useMediaQuery} from 'react-responsive';
+
 import CanvasContainer from '../../containers/Canvas-container';
 import SvgFilterContainer from '../../containers/Svg-filter-container';
 
@@ -9,6 +11,7 @@ import Button from '../Button';
 import btnStyle from '../Button/Button.module.scss';
 import {ReactComponent as SaveIcon} from '../../../public/assets/icon-download.svg';
 import {ReactComponent as PreviewIcon} from '../../../public/assets/icon-preview.svg';
+import {SCREEN_DT} from '../../config';
 
 const ImageWorkarea = (props) => {
   const {
@@ -16,6 +19,10 @@ const ImageWorkarea = (props) => {
     onTogglePreview,
     filterApplied
   } = props;
+
+  const isDesktop = useMediaQuery({
+    query: `(min-width: ${SCREEN_DT + 1}px)`
+  });
 
   return (
     <div className={style['image-workarea']}>
@@ -27,8 +34,8 @@ const ImageWorkarea = (props) => {
       <div className={style['image-workarea__save-btn']}>
         <Button
           onBtnClick={onSaveImage}
-          text={'Save image'}
-          isTextHidden={true}
+          text={isDesktop ? 'Save' : 'Save image'}
+          isTextHidden={!isDesktop}
         >
           <SaveIcon/>
         </Button>
@@ -38,8 +45,8 @@ const ImageWorkarea = (props) => {
         <Button
           className={filterApplied ? '' : btnStyle['btn--active']}
           onBtnClick={onTogglePreview}
-          text={'Toggle preview'}
-          isTextHidden={true}
+          text={isDesktop ? 'Preview' : 'Toggle preview'}
+          isTextHidden={!isDesktop}
         >
           <PreviewIcon/>
         </Button>

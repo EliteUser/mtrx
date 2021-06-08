@@ -9,6 +9,11 @@
   @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
     width: 160px;
   }
+
+  @media (min-width: $screen-dt + 1) {
+    width: 100%;
+    flex-direction: row-reverse;
+  }
 }
 
 .preset__selector {
@@ -21,6 +26,12 @@
   transition: 0.2s ease-in-out;
   border-radius: 6px;
   cursor: pointer;
+
+  @media (min-width: $screen-dt + 1) {
+    width: 100%;
+    margin-bottom: 0;
+    margin-left: 5px;
+  }
 
   &--selected {
     box-shadow: 0 0 0 2px var(--color-light);
@@ -41,6 +52,11 @@
   @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
     width: 160px;
     height: 160px;
+  }
+
+  @media (min-width: $screen-dt + 1) {
+    width: 100%;
+    height: 50px;
   }
 
   &--front {
@@ -87,9 +103,16 @@
   align-items: center;
   padding: 5px 5px 30px 5px;
   justify-content: center;
+  overflow: hidden;
 
   @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
     padding: 8px 8px 40px 8px;
+  }
+
+  @media (min-width: $screen-dt + 1) {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 6px 30px 6px 15px;
   }
 }
 
@@ -110,6 +133,14 @@
   @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
     width: 36px;
     height: 36px;
+  }
+
+  @media (min-width: $screen-dt + 1) {
+    width: 30px;
+    height: 30px;
+    top: 50%;
+    bottom: unset;
+    transform: translateY(-50%);
   }
 
   svg {
@@ -151,16 +182,31 @@
 .preset__toggle {
   width: 36px;
   height: 36px;
-  transform: rotateX(180deg);
   transition: 0.2s ease-in-out;
+
+  @media (max-width: $screen-dt) {
+    transform: rotateX(180deg);
+  }
 
   @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
     width: 48px;
     height: 48px;
   }
 
+  @media (min-width: $screen-dt + 1) {
+    transform: rotateZ(-90deg) rotateX(0);
+    width: 40px;
+    height: 40px;
+  }
+
   &--active {
-    transform: rotateX(0deg);
+    @media (max-width: $screen-dt) {
+      transform: rotateX(0deg);
+    }
+
+    @media (min-width: $screen-dt + 1) {
+      transform: rotateZ(-90deg) rotateX(180deg);
+    }
   }
 
   &:hover,

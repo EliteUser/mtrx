@@ -16,6 +16,11 @@
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
 
+  @media (min-width: $screen-tb + 1) {
+    width: 48px;
+    height: 48px;
+  }
+
   &:hover,
   &:focus-visible {
     background-color: var(--bg-layer-up);
@@ -25,20 +30,20 @@
     opacity: 0.75;
   }
 
-  @media (min-width: $screen-tb + 1) {
-    width: 48px;
-    height: 48px;
-  }
-
   svg {
     fill: var(--text);
     width: 16px;
     height: 16px;
     transition: fill 0.2s;
 
-    @media (min-width: $screen-tb + 1) {
+    @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
       width: 24px;
       height: 24px;
+    }
+
+    @media (min-width: $screen-dt + 1) {
+      width: 20px;
+      height: 20px;
     }
   }
 
@@ -58,9 +63,14 @@
     outline: none;
     box-shadow: 0 4px 4px var(--shadow-color), 0 4px 10px var(--shadow-color);
 
-    @media (min-width: $screen-tb + 1) {
+    @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
       width: 48px;
       height: 48px;
+    }
+
+    @media (min-width: $screen-dt + 1) {
+      width: 40px;
+      height: 40px;
     }
 
     &:hover {
@@ -77,10 +87,20 @@
       height: 16px;
       fill: var(--color-light);
 
-      @media (min-width: $screen-tb + 1) {
+      @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
         width: 24px;
         height: 24px;
       }
+
+      @media (min-width: $screen-dt + 1) {
+        width: 20px;
+        height: 20px;
+      }
     }
   }
+}
+
+.btn__text {
+  text-transform: uppercase;
+  margin-right: 10px;
 }

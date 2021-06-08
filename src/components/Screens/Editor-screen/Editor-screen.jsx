@@ -49,37 +49,39 @@ const EditorScreen = (props) => {
   return (
     <div className={style['editor']}>
       <ImageWorkareaContainer/>
-      {
-        tabs.map((tabName) => {
-          return (
-            <EditorTabpanel key={tabName} value={activeTab} index={tabName} label={tabName}>
-              {getControls(tabName)}
-            </EditorTabpanel>
-          );
-        })
-      }
-      <StyledTabs
-        className={style['editor-tabs']}
-        value={activeTab}
-        onChange={onTabClick}
-        variant="fullWidth"
-        aria-label="Application tabs">
+      <div className={style['editor__controls']}>
         {
           tabs.map((tabName) => {
-            const name = tabName === 'mtrx' ? <TextLogo/> : tabName;
             return (
-              <StyledTab
-                className={style['editor-tab']}
-                key={tabName}
-                label={name}
-                value={tabName}
-                aria-controls={`tabpanel-${tabName}`}
-                id={`tab-${tabName}`}
-              />
+              <EditorTabpanel key={tabName} value={activeTab} index={tabName} label={tabName}>
+                {getControls(tabName)}
+              </EditorTabpanel>
             );
           })
         }
-      </StyledTabs>
+        <StyledTabs
+          className={style['editor__tabs']}
+          value={activeTab}
+          onChange={onTabClick}
+          variant="fullWidth"
+          aria-label="Application tabs">
+          {
+            tabs.map((tabName) => {
+              const name = tabName === 'mtrx' ? <TextLogo/> : tabName;
+              return (
+                <StyledTab
+                  className={style['editor__tab']}
+                  key={tabName}
+                  label={name}
+                  value={tabName}
+                  aria-controls={`tabpanel-${tabName}`}
+                  id={`tab-${tabName}`}
+                />
+              );
+            })
+          }
+        </StyledTabs>
+      </div>
     </div>
   );
 };

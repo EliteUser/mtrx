@@ -1,25 +1,59 @@
 .editor {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 180px 50px;
+  grid-template-rows: 1fr 230px;
   height: 100%;
 
-  @media (min-width: $screen-tb + 1) {
-    grid-template-rows: 1fr 240px 70px;
+  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
+    grid-template-rows: 1fr 310px;
+  }
+
+  @media (min-width: $screen-dt + 1) {
+    grid-template-columns: 1fr 30%;
+    grid-template-rows: 1fr;
   }
 }
 
-.editor-tabs {
-  transition: background-color 0.2s;
+.editor__controls {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 180px 50px;
+
+  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
+    grid-template-rows: 240px 70px;
+  }
+
+  @media (min-width: $screen-dt + 1) {
+    grid-template-rows: 60px 1fr;
+    width: 100%;
+    max-height: calc(100vh - 160px);
+  }
 }
 
-.editor-tab {
+.editor__tabs {
+  transition: background-color 0.2s;
+
+  @media (min-width: $screen-dt + 1) {
+    grid-row: 1;
+
+    span {
+      top: 0;
+    }
+  }
+}
+
+.editor__tab {
   height: var(--tab-height);
   font-size: 14px;
   transition: background-color 0.2s;
 
-  @media (min-width: $screen-tb + 1) {
+  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
     font-size: 24px !important;
+  }
+
+  @media (min-width: $screen-dt + 1) {
+    font-size: 16px !important;
+    min-width: auto !important;
   }
 
   svg {
@@ -27,8 +61,12 @@
     max-height: 24px;
     transition: fill 0.2s;
 
-    @media (min-width: $screen-tb + 1) {
+    @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
       max-height: 36px;
+    }
+
+    @media (min-width: $screen-dt + 1) {
+      max-height: 24px;
     }
   }
 

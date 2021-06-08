@@ -10,7 +10,7 @@ import FileChooserContainer from '../../../containers/File-chooser-container';
 
 const EntryScreen = () => {
   const isDesktop = useMediaQuery({
-    query: `(min-device-width: ${SCREEN_DT + 1}px)`
+    query: `(min-width: ${SCREEN_DT + 1}px)`
   });
 
   return (

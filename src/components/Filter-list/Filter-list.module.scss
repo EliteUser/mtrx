@@ -17,6 +17,10 @@
     padding: 20px 90px;
   }
 
+  @media (min-width: $screen-dt + 1) {
+    padding: 40px 30px;
+  }
+
   &::-webkit-scrollbar {
     width: 4px;
   }
@@ -32,6 +36,11 @@
 
   @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
     margin-bottom: 20px;
+  }
+
+  @media (min-width: $screen-dt + 1) {
+    max-width: 500px;
+    margin: 0 auto 20px;
   }
 }
 

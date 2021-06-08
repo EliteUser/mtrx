@@ -77,17 +77,17 @@ const CanvasContainer = (props) => {
           const paintTimeout = setTimeout(() => {
             setTimeout(() => {
               setRendering(true);
+
+              setTimeout(() => {
+                canvas.width = initialSize.width;
+                canvas.height = initialSize.height;
+
+                ctx.filter = filterApplied ? filterString : 'none';
+                ctx.drawImage(sourceImage, 0, 0, canvas.width, canvas.height);
+
+                setRendering(false);
+              }, 20);
             }, 0);
-
-            setTimeout(() => {
-              canvas.width = initialSize.width;
-              canvas.height = initialSize.height;
-
-              ctx.filter = filterApplied ? filterString : 'none';
-              ctx.drawImage(sourceImage, 0, 0, canvas.width, canvas.height);
-
-              setRendering(false);
-            }, 20);
           }, 700);
 
           setRepaintTimeout(paintTimeout);
@@ -114,7 +114,8 @@ CanvasContainer.propTypes = {
   filterApplied: PropTypes.bool,
   primitives: PropTypes.array,
   setImage: PropTypes.func.isRequired,
-  isRendering: PropTypes.bool
+  isRendering: PropTypes.bool,
+  setRendering: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {

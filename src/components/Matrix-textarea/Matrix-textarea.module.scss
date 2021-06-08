@@ -15,8 +15,12 @@
   border-radius: 2px;
   outline: none;
 
-  @media (min-width: $screen-tb + 1) {
+  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
     min-height: 180px;
+  }
+
+  @media (min-width: $screen-dt + 1) {
+    min-height: 300px;
   }
 
   &:hover,

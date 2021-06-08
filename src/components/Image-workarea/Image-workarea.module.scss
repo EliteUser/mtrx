@@ -4,34 +4,70 @@
   justify-content: center;
   align-items: center;
   padding: 20px 0;
+
+  @media (min-width: $screen-dt + 1) {
+    padding: 20px;
+  }
 }
 
 .image-workarea__canvas {
   width: 100%;
 }
 
-.image-workarea__save-btn {
+.image-workarea__save-btn,
+.image-workarea__preview-btn {
   background-color: var(--bg-layer-low);
   position: absolute;
-  right: 10px;
-  top: 10px;
   border-radius: 2px;
 
-  @media (min-width: $screen-tb + 1) {
+  @media (max-width: $screen-tb) {
+    right: 10px;
+  }
+
+  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
     right: 15px;
+  }
+
+  @media (min-width: $screen-dt + 1) {
+    position: fixed;
+    bottom: 0;
+    height: 60px;
+    width: 15%;
+
+    button {
+      width: 100%;
+      height: 100%;
+      padding: 10px;
+    }
+  }
+}
+
+.image-workarea__save-btn {
+  @media (max-width: $screen-tb) {
+    top: 10px;
+  }
+
+  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
     top: 15px;
+  }
+
+  @media (min-width: $screen-dt + 1) {
+    right: 0;
+    border-left: 1px solid var(--text);
   }
 }
 
 .image-workarea__preview-btn {
-  background-color: var(--bg-layer-low);
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  border-radius: 2px;
+  @media (max-width: $screen-tb) {
+    bottom: 10px;
+  }
 
-  @media (min-width: $screen-tb + 1) {
-    right: 15px;
+  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
     bottom: 15px;
+  }
+
+  @media (min-width: $screen-dt + 1) {
+    right: 15%;
+    border-right: 1px solid var(--text);
   }
 }
