@@ -320,9 +320,15 @@ const filter = (state = initialState, action) => {
         primitiveToAdd
       ];
 
+      const updatedDefaultPrimitives = [
+        state.defaultPrimitives,
+        primitiveToAdd
+      ];
+
       return {
         ...state,
         primitives: updatedPrimitives,
+        defaultPrimitives: updatedDefaultPrimitives,
         selectedPrimitiveId: id
       };
     }
@@ -335,10 +341,12 @@ const filter = (state = initialState, action) => {
       } = action.payload;
 
       const updatedPrimitives = [...state.primitives].filter(({id}) => id !== primitiveId);
+      const updatedDefaultPrimitives = [...state.defaultPrimitives].filter(({id}) => id !== primitiveId);
 
       return {
         ...state,
         primitives: updatedPrimitives,
+        defaultPrimitives: updatedDefaultPrimitives,
         selectedPrimitiveId: updatedPrimitives[0].id
       };
     }
