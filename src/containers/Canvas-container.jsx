@@ -56,47 +56,44 @@ const CanvasContainer = (props) => {
   }, []);
 
   useEffect(() => {
-    requestAnimationFrame(() => {
-      try {
-        if (repaintTimeout) {
-          clearTimeout(repaintTimeout);
-        }
-
-        if (sourceImage) {
-          const canvas = canvasRef.current;
-          const ctx = canvas.getContext('2d', {alpha: false});
-
-          const scale = getScaleCoefficient(initialSize.width, initialSize.height);
-
-          canvas.width = initialSize.width / scale;
-          canvas.height = initialSize.height / scale;
-
-          ctx.filter = filterApplied ? filterString : 'none';
-          ctx.drawImage(sourceImage, 0, 0, canvas.width, canvas.height);
-
-          const paintTimeout = setTimeout(() => {
-            setTimeout(() => {
-              setRendering(true);
-
-              setTimeout(() => {
-                canvas.width = initialSize.width;
-                canvas.height = initialSize.height;
-
-                ctx.filter = filterApplied ? filterString : 'none';
-                ctx.drawImage(sourceImage, 0, 0, canvas.width, canvas.height);
-
-                setRendering(false);
-              }, 20);
-            }, 0);
-          }, 700);
-
-          setRepaintTimeout(paintTimeout);
-        }
-      } catch (err) {
-        setRendering(false);
-        console.log(err);
+    try {
+      if (repaintTimeout) {
+        clearTimeout(repaintTimeout);
       }
-    });
+
+      if (sourceImage) {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d', {alpha: false});
+
+        const scale = getScaleCoefficient(initialSize.width, initialSize.height);
+
+        canvas.width = initialSize.width / scale;
+        canvas.height = initialSize.height / scale;
+
+        ctx.filter = filterApplied ? filterString : 'none';
+        ctx.drawImage(sourceImage, 0, 0, canvas.width, canvas.height);
+
+        const paintTimeout = setTimeout(() => {
+          setTimeout(() => {
+            setRendering(true);
+
+            setTimeout(() => {
+              canvas.width = initialSize.width;
+              canvas.height = initialSize.height;
+
+              ctx.filter = filterApplied ? filterString : 'none';
+              ctx.drawImage(sourceImage, 0, 0, canvas.width, canvas.height);
+
+              setRendering(false);
+            }, 20);
+          }, 0);
+        }, 700);
+        setRepaintTimeout(paintTimeout);
+      }
+    } catch (err) {
+      setRendering(false);
+      console.log(err);
+    }
   }, [filterString, filterApplied, sourceImage, primitives]);
 
   return (
