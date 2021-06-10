@@ -85,6 +85,7 @@
     svg {
       width: 16px;
       height: 16px;
+      color: var(--color-light);
       fill: var(--color-light);
 
       @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
