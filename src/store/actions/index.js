@@ -1,5 +1,5 @@
 import {ActionType} from './types';
-import {EditorTab} from '../../config';
+import {EditorTab} from '../../config/config';
 
 export const setAppScreenEntry = () => {
   return {
@@ -44,31 +44,12 @@ export const setImageFileAndGoToEditor = (image) => () => (dispatch) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const setKernelX = (value, primitiveId) => {
+export const setProperty = (propName, value, primitiveId) => {
   return {
-    type: ActionType.FILTER_PRIMITIVE_KERNEL_X_CHANGED,
+    type: ActionType.FILTER_PRIMITIVE_PROPERTY_CHANGED,
     payload: {
+      propName,
       value,
-      id: primitiveId
-    }
-  };
-};
-
-export const setKernelY = (value, primitiveId) => {
-  return {
-    type: ActionType.FILTER_PRIMITIVE_KERNEL_Y_CHANGED,
-    payload: {
-      value,
-      id: primitiveId
-    }
-  };
-};
-
-export const setKernelMatrix = (matrixValue, primitiveId) => {
-  return {
-    type: ActionType.FILTER_PRIMITIVE_KERNEL_MATRIX_CHANGED,
-    payload: {
-      value: matrixValue,
       id: primitiveId
     }
   };
@@ -81,26 +62,6 @@ export const setKernelMatrixElement = (value, primitiveId, elementPositionIndex)
       value,
       id: primitiveId,
       index: elementPositionIndex
-    }
-  };
-};
-
-export const setDivisor = (value, primitiveId) => {
-  return {
-    type: ActionType.FILTER_PRIMITIVE_DIVISOR_CHANGED,
-    payload: {
-      value: value,
-      id: primitiveId
-    }
-  };
-};
-
-export const setBias = (value, primitiveId) => {
-  return {
-    type: ActionType.FILTER_PRIMITIVE_BIAS_CHANGED,
-    payload: {
-      value: value,
-      id: primitiveId
     }
   };
 };
@@ -182,3 +143,31 @@ export const selectPreset = (presetId) => {
   };
 };
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const selectPrimitive = (primitiveId) => {
+  return {
+    type: ActionType.PRIMITIVE_SELECT,
+    payload: {
+      id: primitiveId
+    }
+  };
+};
+
+export const addPrimitive = (primitiveType) => {
+  return {
+    type: ActionType.PRIMITIVE_ADDED,
+    payload: {
+      primitiveType
+    }
+  };
+};
+
+export const removePrimitive = (primitiveId) => {
+  return {
+    type: ActionType.PRIMITIVE_REMOVED,
+    payload: {
+      primitiveId
+    }
+  };
+};

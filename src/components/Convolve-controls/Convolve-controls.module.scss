@@ -1,0 +1,26 @@
+.convolve-controls {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  width: 280px;
+  margin: 0 auto;
+  align-items: center;
+
+  @media (min-width: $screen-dt + 1) {
+    grid-gap: 20px;
+  }
+}
+
+.convolve-controls__matrix-size {
+  display: flex;
+  align-items: center;
+
+  span {
+    margin: 0 5px;
+  }
+}
+
+.convolve-controls__label {
+  margin: 0 auto 0 0;
+}

@@ -3,17 +3,16 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers/root-reducer';
 
-const logMiddleware = ({ getState }) => (next) => (action) => {
-  console.log(action.type, getState());
-  return next(action);
-};
+import {logMiddleware} from './middlewares/log';
+import {idMiddleware} from './middlewares/id';
 
 const store = createStore(
   rootReducer,
   composeWithDevTools(
     applyMiddleware(
       thunk,
-      logMiddleware
+      logMiddleware,
+      idMiddleware
     )
   )
 );

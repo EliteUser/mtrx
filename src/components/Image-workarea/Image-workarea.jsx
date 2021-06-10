@@ -11,7 +11,7 @@ import Button from '../Button';
 import btnStyle from '../Button/Button.module.scss';
 import {ReactComponent as SaveIcon} from '../../../public/assets/icon-download.svg';
 import {ReactComponent as PreviewIcon} from '../../../public/assets/icon-preview.svg';
-import {SCREEN_DT} from '../../config';
+import {SCREEN_DT} from '../../config/config';
 
 const ImageWorkarea = (props) => {
   const {

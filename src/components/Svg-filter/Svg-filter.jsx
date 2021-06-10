@@ -18,23 +18,23 @@ const SvgFilter = (props) => {
           colorInterpolationFilters="sRGB"
         >
           {
-            primitives.map((primitive) => {
+            primitives.map((primitive, index, array) => {
               const {
                 id,
                 kernelX,
                 kernelY,
-                kernelMatrix,
-                divisor,
-                bias
+                ...rest
               } = primitive;
+
+              const currentSvgId = `svg_${id}`;
+              const svgIn = index === 0 ? 'SourceGraphic' : `svg_${array[index - 1].id}`;
 
               return <SvgFilterPrimitive
                 key={id}
-                kernelX={kernelX}
-                kernelY={kernelY}
-                kernelMatrix={kernelMatrix.join(' ')}
-                divisor={divisor}
-                bias={bias}
+                order={kernelX && kernelY ? `${kernelX} ${kernelY}` : ''}
+                in={svgIn}
+                result={currentSvgId}
+                {...rest}
               />;
             })
           }
@@ -46,7 +46,6 @@ const SvgFilter = (props) => {
 
 SvgFilter.propTypes = {
   primitives: PropTypes.array
-  // TODO PT shape
 };
 
 export default SvgFilter;

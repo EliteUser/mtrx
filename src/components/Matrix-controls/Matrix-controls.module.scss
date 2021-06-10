@@ -1,0 +1,31 @@
+.matrix-controls__textarea {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  padding-right: 80px;
+
+  @media (min-width: $screen-tb + 1) and (max-width: $screen-dt) {
+    padding: 4px 90px 4px 0;
+  }
+
+  @media (min-width: $screen-dt + 1) {
+    padding-right: 60px;
+  }
+}
+
+.matrix-controls__inputs {
+  display: grid;
+  padding: 0 40px;
+  width: 100%;
+  height: 100%;
+
+  @media (min-width: $screen-tb + 1) {
+    margin: 0;
+  }
+
+  @media (min-width: $screen-dt + 1) {
+    width: auto;
+    padding: 0;
+  }
+}

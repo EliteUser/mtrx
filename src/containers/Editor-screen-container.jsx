@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 import EditorScreen from '../components/Screens/Editor-screen';
 import {setEditorTab} from '../store/actions';
-import {EditorTab} from '../config';
+import {EditorTab} from '../config/config';
 
 const {
   PRESETS,

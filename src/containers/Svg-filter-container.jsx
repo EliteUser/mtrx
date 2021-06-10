@@ -22,8 +22,10 @@ SvgFilterContainer.propTypes = {
 
 const mapStateToProps = (state) => {
   const {primitives} = state.filter;
+  const visiblePrimitives = primitives.filter(({visible}) => visible);
+
   return {
-    primitives
+    primitives: visiblePrimitives
   };
 };
 

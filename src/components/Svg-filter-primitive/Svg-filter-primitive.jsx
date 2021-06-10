@@ -1,44 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {primitiveAttributes} from '../../config/primitives';
+
 const SvgFilterPrimitive = (props) => {
-  const {
-    kernelX,
-    kernelY,
-    kernelMatrix,
-    divisor,
-    bias
-  } = props;
-  const kernelSize = `${kernelX} ${kernelY}`;
+  const params = Object.entries(primitiveAttributes[props.primitiveType])
+    .reduce((acc, elem) => {
+      const [key, value] = elem;
+
+      if (props[key]) {
+        acc[key] = props[key];
+      } else {
+        acc[key] = value;
+      }
+
+      if (props.kernelMatrix && props.kernelMatrix.length) {
+        acc['values'] = props.kernelMatrix;
+      }
+
+      return acc;
+    }, {});
 
   return (
     <React.Fragment>
-      <feConvolveMatrix
-        order={kernelSize}
-        kernelMatrix={kernelMatrix}
-        divisor={divisor}
-        bias={bias}
-
-        x="0%"
-        y="0%"
-        targetX="0"
-        targetY="0"
-
-        edgeMode="duplicate"
-        preserveAlpha="true"
-        in="SourceGraphic"
-        result="convolveMatrix"
+      <props.primitiveType
+        {...params}
+        in={props.in}
+        result={props.result}
       />
     </React.Fragment>
   );
 };
 
 SvgFilterPrimitive.propTypes = {
-  kernelX: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([''])]),
-  kernelY: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([''])]),
-  kernelMatrix: PropTypes.string,
-  divisor: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([''])]),
-  bias: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([''])]),
+  primitiveType: PropTypes.string.isRequired,
+  kernelMatrix: PropTypes.array,
+  in: PropTypes.string,
+  result: PropTypes.string,
 };
 
 export default SvgFilterPrimitive;

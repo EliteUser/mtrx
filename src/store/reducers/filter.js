@@ -3,12 +3,15 @@ import deepClone from 'lodash.clonedeep';
 
 import {ActionType} from '../actions/types';
 import {
-  DEFAULT_PRIMITIVE,
+  DEFAULT_CONVOLVE_MATRIX_PRIMITIVE,
   MAX_KERNEL_SIZE,
   MIN_KERNEL_SIZE,
-  filterConfig,
+  filterConfig, DEFAULT_COLOR_MATRIX_PRIMITIVE, PrimitiveType
+} from '../../config/config';
+
+import {
   presetConfig
-} from '../../config';
+} from '../../config/presets';
 
 import {
   getFilterString,
@@ -22,24 +25,16 @@ import {
 const initialState = {
   filterString: getFilterString(filterConfig),
   filterApplied: true,
-  selectedPrimitive: '1',
+  selectedPrimitiveId: '1',
   selectedPreset: null,
   defaultPrimitives: [
-    {...DEFAULT_PRIMITIVE}
+    {...DEFAULT_CONVOLVE_MATRIX_PRIMITIVE}
   ],
   primitives: [
-    {...DEFAULT_PRIMITIVE}
+    {...DEFAULT_CONVOLVE_MATRIX_PRIMITIVE}
   ],
   filters: filterConfig,
   presets: presetConfig
-};
-
-const primitiveActionToPropMap = {
-  FILTER_PRIMITIVE_KERNEL_X_CHANGED: 'kernelX',
-  FILTER_PRIMITIVE_KERNEL_Y_CHANGED: 'kernelY',
-  FILTER_PRIMITIVE_KERNEL_MATRIX_CHANGED: 'kernelMatrix',
-  FILTER_PRIMITIVE_DIVISOR_CHANGED: 'divisor',
-  FILTER_PRIMITIVE_BIAS_CHANGED: 'bias'
 };
 
 const propFormatting = {
@@ -62,12 +57,12 @@ const updatePrimitive = (primitives, {
 
   const updatedPrimitive = {
     ...primitive,
-    [prop]: propFormatting[prop](value)
+    [prop]: propFormatting[prop] ? propFormatting[prop](value) : value
   };
 
   // If kernelX or kernelY changed, update matrix (fill with 1s or truncate)
-  const xProp = primitiveActionToPropMap.FILTER_PRIMITIVE_KERNEL_X_CHANGED;
-  const yProp = primitiveActionToPropMap.FILTER_PRIMITIVE_KERNEL_Y_CHANGED;
+  const xProp = 'kernelX';
+  const yProp = 'kernelY';
 
   if (prop === xProp || prop === yProp) {
     const {
@@ -143,145 +138,213 @@ const resetFilter = (filters, filterName) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const filter = (state = initialState, action) => {
-  if (primitiveActionToPropMap[action.type]) {
-    const updatedPrimitives = updatePrimitive(state.primitives, {
-      primitiveId: action.payload.id,
-      prop: primitiveActionToPropMap[action.type],
-      value: action.payload.value
-    });
-    return {
-      ...state,
-      primitives: updatedPrimitives
-    };
-  } else {
+  switch (action.type) {
+    case ActionType.FILTER_PRIMITIVE_PROPERTY_CHANGED: {
+      const {
+        propName,
+        value,
+        id
+      } = action.payload;
+
+      const updatedPrimitives = updatePrimitive(state.primitives, {
+        prop: propName,
+        value,
+        primitiveId: id
+      });
+
+      return {
+        ...state,
+        primitives: updatedPrimitives
+      };
+    }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    switch (action.type) {
-      case ActionType.FILTER_PRIMITIVE_KERNEL_MATRIX_ELEMENT_CHANGED: {
-        const {
-          id,
-          value,
-          index
-        } = action.payload;
-        const updatedPrimitives = updateKernelElement(state.primitives, {
-          primitiveId: id,
-          value,
-          index
-        });
+    case ActionType.FILTER_PRIMITIVE_KERNEL_MATRIX_ELEMENT_CHANGED: {
+      const {
+        id,
+        value,
+        index
+      } = action.payload;
+      const updatedPrimitives = updateKernelElement(state.primitives, {
+        primitiveId: id,
+        value,
+        index
+      });
+
+      return {
+        ...state,
+        primitives: updatedPrimitives
+      };
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    case ActionType.FILTER_MATRIX_FORMAT: {
+      const formattedMatrix = action.payload.value.reduce((acc, el) => {
+        return el ? [...acc, el] : [...acc];
+      }, []);
+
+      const updatedPrimitives = updatePrimitive(state.primitives, {
+        primitiveId: action.payload.id,
+        prop: 'kernelMatrix',
+        value: formattedMatrix,
+      });
+
+      return {
+        ...state,
+        primitives: updatedPrimitives
+      };
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    case ActionType.FILTER_MATRIX_RESET: {
+      const {id: primitiveId} = action.payload;
+      const {
+        primitives,
+        defaultPrimitives
+      } = state;
+      const primitiveIndex = primitives.findIndex(({id}) => primitiveId === id);
+      const defaultPrimitive = defaultPrimitives.find(({id}) => primitiveId === id);
+
+      return {
+        ...state,
+        primitives: [
+          ...primitives.slice(0, primitiveIndex),
+          {...deepClone(defaultPrimitive)},
+          ...primitives.slice(primitiveIndex + 1)
+        ]
+      };
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    case ActionType.TOGGLE_FILTER: {
+      // const filter = state.filterString.length ? '' : getFilterString(state.filters);
+      const filterApplied = state.filterApplied;
+
+      return {
+        ...state,
+        filterApplied: !filterApplied
+      };
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    case ActionType.FILTER_CHANGED: {
+      const {filters} = state;
+      const {
+        value,
+        name
+      } = action.payload;
+      const updatedFilters = updateFilters(filters, {
+        value,
+        filterName: name
+      });
+
+      return {
+        ...state,
+        filterString: getFilterString(updatedFilters),
+        filters: updatedFilters
+      };
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    case ActionType.FILTER_RESET: {
+      const {filters} = state;
+      const updatedFilters = resetFilter(filters, action.payload.name);
+
+      return {
+        ...state,
+        filterString: getFilterString(updatedFilters),
+        filters: updatedFilters
+      };
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    case ActionType.PRESET_SELECT: {
+      const selectedPresetId = action.payload.id;
+
+      if (state.selectedPreset === selectedPresetId) {
+        return deepClone(initialState);
+      } else {
+        const preset = presetConfig.find(({id}) => id === selectedPresetId);
+        const presetPrimitives = deepClone(preset.primitives);
+        const presetFilters = deepClone(preset.filters);
 
         return {
           ...state,
-          primitives: updatedPrimitives
+          selectedPreset: selectedPresetId,
+          primitives: presetPrimitives,
+          defaultPrimitives: presetPrimitives,
+          filterString: getFilterString(presetFilters),
+          filters: presetFilters,
+          selectedPrimitiveId: presetPrimitives[0].id
         };
       }
+    }
 
-      //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      case ActionType.FILTER_MATRIX_FORMAT: {
-        const formattedMatrix = action.payload.value.reduce((acc, el) => {
-          return el ? [...acc, el] : [...acc];
-        }, []);
+    case ActionType.PRIMITIVE_SELECT: {
+      const selectedPrimitiveId = action.payload.id;
 
-        const updatedPrimitives = updatePrimitive(state.primitives, {
-          primitiveId: action.payload.id,
-          prop: primitiveActionToPropMap.FILTER_PRIMITIVE_KERNEL_MATRIX_CHANGED,
-          value: formattedMatrix,
-        });
+      return {
+        ...state,
+        selectedPrimitiveId
+      };
+    }
 
-        return {
-          ...state,
-          primitives: updatedPrimitives
-        };
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    case ActionType.PRIMITIVE_ADDED: {
+      const {
+        primitiveType,
+        id = '1'
+      } = action.payload;
+
+      let primitiveToAdd = {};
+      if (primitiveType === PrimitiveType.convolveMatrix) {
+        primitiveToAdd = {...DEFAULT_CONVOLVE_MATRIX_PRIMITIVE};
+      } else if (primitiveType === PrimitiveType.colorMatrix) {
+        primitiveToAdd = {...DEFAULT_COLOR_MATRIX_PRIMITIVE};
       }
 
-      //////////////////////////////////////////////////////////////////////////////////////////////////////////
+      primitiveToAdd.id = id;
 
-      case ActionType.FILTER_MATRIX_RESET: {
-        const {id: primitiveId} = action.payload;
-        const {
-          primitives,
-          defaultPrimitives
-        } = state;
-        const primitiveIndex = primitives.findIndex(({id}) => primitiveId === id);
-        const defaultPrimitive = defaultPrimitives.find(({id}) => primitiveId === id);
+      const updatedPrimitives = [
+        ...state.primitives,
+        primitiveToAdd
+      ];
 
-        return {
-          ...state,
-          primitives: [
-            ...primitives.slice(0, primitiveIndex),
-            {...deepClone(defaultPrimitive)},
-            ...primitives.slice(primitiveIndex + 1)
-          ]
-        };
-      }
+      return {
+        ...state,
+        primitives: updatedPrimitives,
+        selectedPrimitiveId: id
+      };
+    }
 
-      //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      case ActionType.TOGGLE_FILTER: {
-        // const filter = state.filterString.length ? '' : getFilterString(state.filters);
-        const filterApplied = state.filterApplied;
+    case ActionType.PRIMITIVE_REMOVED: {
+      const {
+        primitiveId
+      } = action.payload;
 
-        return {
-          ...state,
-          filterApplied: !filterApplied
-        };
-      }
+      const updatedPrimitives = [...state.primitives].filter(({id}) => id !== primitiveId);
 
-      case ActionType.FILTER_CHANGED: {
-        const {filters} = state;
-        const {
-          value,
-          name
-        } = action.payload;
-        const updatedFilters = updateFilters(filters, {
-          value,
-          filterName: name
-        });
+      return {
+        ...state,
+        primitives: updatedPrimitives,
+        selectedPrimitiveId: updatedPrimitives[0].id
+      };
+    }
 
-        return {
-          ...state,
-          filterString: getFilterString(updatedFilters),
-          filters: updatedFilters
-        };
-      }
-
-      case ActionType.FILTER_RESET: {
-        const {filters} = state;
-        const updatedFilters = resetFilter(filters, action.payload.name);
-
-        return {
-          ...state,
-          filterString: getFilterString(updatedFilters),
-          filters: updatedFilters
-        };
-      }
-
-      case ActionType.PRESET_SELECT: {
-        const selectedPresetId = action.payload.id;
-
-        if (state.selectedPreset === selectedPresetId) {
-          return deepClone(initialState);
-        } else {
-          const preset = presetConfig.find(({id}) => id === selectedPresetId);
-          const presetPrimitives = deepClone(preset.primitives);
-          const presetFilters = deepClone(preset.filters);
-
-          return {
-            ...state,
-            selectedPreset: selectedPresetId,
-            primitives: presetPrimitives,
-            defaultPrimitives: presetPrimitives,
-            filterString: getFilterString(presetFilters),
-            filters: presetFilters,
-            selectedPrimitive: presetPrimitives[0].id
-          };
-        }
-      }
-
-      default: {
-        return state;
-      }
+    default: {
+      return state;
     }
   }
 };
