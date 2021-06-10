@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import style from './Editor-screen.module.scss';
 
-import {EditorTab} from '../../../config';
+import {EditorTab} from '../../../config/config';
 
 import StyledTabs from './Styled-tabs';
 import StyledTab from './Styled-tab';

@@ -1,4 +1,4 @@
-import {filterValueToStringMap} from '../config';
+import {filterValueToStringMap} from '../config/config';
 
 export const getFiltersProp = (filterConfig, propName) => {
   return Object.entries(filterConfig)

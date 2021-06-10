@@ -1,4 +1,4 @@
-import {AppScreen} from '../../config';
+import {AppScreen} from '../../config/config';
 import {ActionType} from '../actions/types';
 
 const initialState = {

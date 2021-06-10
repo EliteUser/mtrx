@@ -5,7 +5,7 @@ import style from './App.module.scss';
 import {connect} from 'react-redux';
 
 import Header from '../Header';
-import {AppScreen} from '../../config';
+import {AppScreen} from '../../config/config';
 import EntryScreen from '../Screens/Entry-screen';
 import EditorScreenContainer from '../../containers/Editor-screen-container';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './Entry-screen.module.scss';
 
-import {SCREEN_DT} from '../../../config';
+import {SCREEN_DT} from '../../../config/config';
 import {useMediaQuery} from 'react-responsive';
 
 import BigLogo from '../../Big-logo';

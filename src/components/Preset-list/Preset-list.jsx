@@ -11,8 +11,6 @@ const PresetList = (props) => {
     onPresetSelect
   } = props;
 
-
-
   return (
     <div className={style['preset-list']}>
       <ul className={style['preset-list__list']}>
