@@ -4,13 +4,33 @@
   justify-content: center;
   align-items: center;
   padding: 20px 0;
+  overflow: hidden;
 
   @media (min-width: $screen-dt + 1) {
     padding: 20px;
   }
 }
 
+.image-workarea__controls {
+  position: absolute;
+  z-index: 100;
+  bottom: 10px;
+  left: 10px;
+
+  @media (min-width: $screen-tb + 1) {
+    bottom: 15px;
+    left: 15px;
+  }
+
+  .image-workarea__reset-btn {
+    background-color: var(--bg-layer-low);
+  }
+}
+
 .image-workarea__canvas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
 }
 

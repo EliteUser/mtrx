@@ -7,10 +7,14 @@ import {useMediaQuery} from 'react-responsive';
 import CanvasContainer from '../../containers/Canvas-container';
 import SvgFilterContainer from '../../containers/Svg-filter-container';
 
+import {TransformWrapper, TransformComponent} from 'react-zoom-pan-pinch';
+
 import Button from '../Button';
 import btnStyle from '../Button/Button.module.scss';
 import {ReactComponent as SaveIcon} from '../../../public/assets/icon-download.svg';
 import {ReactComponent as PreviewIcon} from '../../../public/assets/icon-preview.svg';
+import {ReactComponent as IconReset} from '../../../public/assets/icon-reset.svg';
+
 import {SCREEN_DT} from '../../config/config';
 
 const ImageWorkarea = (props) => {
@@ -26,10 +30,28 @@ const ImageWorkarea = (props) => {
 
   return (
     <div className={style['image-workarea']}>
-      <div className={style['image-workarea__canvas']}>
-        <CanvasContainer/>
-        <SvgFilterContainer/>
-      </div>
+      <TransformWrapper>
+        {({resetTransform}) => (
+          <React.Fragment>
+            <div className={style['image-workarea__controls']}>
+              <Button
+                isTextHidden={true}
+                text={'Reset transform'}
+                className={style['image-workarea__reset-btn']}
+                onBtnClick={resetTransform}
+              >
+                <IconReset/>
+              </Button>
+            </div>
+            <TransformComponent>
+              <div className={style['image-workarea__canvas']}>
+                <CanvasContainer/>
+                <SvgFilterContainer/>
+              </div>
+            </TransformComponent>
+          </React.Fragment>
+        )}
+      </TransformWrapper>
 
       <div className={style['image-workarea__save-btn']}>
         <Button

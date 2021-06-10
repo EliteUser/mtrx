@@ -55,3 +55,14 @@ body {
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
+
+.react-transform-component {
+  width: 100% !important;
+  height: 100% !important;
+  overflow: initial !important;
+}
+
+.react-transform-element {
+  width: 100% !important;
+  height: 100% !important;
+}
