@@ -5,12 +5,11 @@ import Logo from '../Logo';
 import ThemeSwitcher from '../Theme-switcher';
 
 const Header = () => {
-  // TODO move to store
   const [isDark, setIsDark] = useState(true);
 
-  const attrToSet = !isDark ? 'dark' : 'light';
-
   const themeSwitcherChangeHandler = () => {
+    const attrToSet = !isDark ? 'dark' : 'light';
+
     document.documentElement.setAttribute('data-theme', attrToSet);
     setIsDark(!isDark);
   };
@@ -18,7 +17,9 @@ const Header = () => {
   return (
     <div className={style['header']}>
       <Logo/>
-      <ThemeSwitcher isDarkModeEnabled={isDark} changeHandler={themeSwitcherChangeHandler}/>
+      <ThemeSwitcher
+        isDarkModeEnabled={isDark}
+        changeHandler={themeSwitcherChangeHandler}/>
     </div>
   );
 };
