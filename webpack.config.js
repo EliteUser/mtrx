@@ -1,7 +1,7 @@
 const path = require('path');
 const loaderUtils = require('loader-utils');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
@@ -77,9 +77,9 @@ module.exports = (env, argv) => {
         {
           test: sassModuleRegex,
           use: [
-            {
-              loader: isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
-            },
+            isProduction ? {
+              loader: MiniCssExtractPlugin.loader,
+            } : 'style-loader',
             {
               loader: require.resolve('css-loader'),
               options: {
@@ -94,7 +94,7 @@ module.exports = (env, argv) => {
               loader: 'resolve-url-loader',
               options: {
                 sourceMap: !isProduction,
-                root: path.join(__dirname, 'src')
+                root: path.join(__dirname, 'src'),
               },
             },
             {
@@ -116,13 +116,23 @@ module.exports = (env, argv) => {
         {
           test: /\.(scss|sass)$/,
           exclude: sassModuleRegex,
-          use: [isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+          use: [
+            isProduction ? {
+              loader: MiniCssExtractPlugin.loader,
+            } : 'style-loader',
             {
               loader: require.resolve('css-loader'),
               options: {
                 importLoaders: 3,
                 sourceMap: !isProduction,
               }
+            },
+            {
+              loader: 'resolve-url-loader',
+              options: {
+                sourceMap: !isProduction,
+                root: path.join(__dirname, 'src'),
+              },
             },
             {
               loader: 'sass-loader',
@@ -157,7 +167,11 @@ module.exports = (env, argv) => {
               }
             },
             {
-              loader: 'file-loader'
+              loader: 'file-loader',
+              options: {
+                outputPath: 'assets',
+                publicPath: '../assets',
+              }
             }
           ]
         },
@@ -169,7 +183,8 @@ module.exports = (env, argv) => {
             {
               loader: 'file-loader',
               options: {
-                outputPath: 'images',
+                outputPath: 'img',
+                publicPath: '../img',
                 name: '[name]-[sha1:hash:7].[ext]'
               }
             }
@@ -184,6 +199,7 @@ module.exports = (env, argv) => {
               loader: 'file-loader',
               options: {
                 outputPath: 'fonts',
+                publicPath: '../fonts',
                 name: '[name].[ext]'
               }
             }
@@ -192,24 +208,35 @@ module.exports = (env, argv) => {
       ]
     },
     plugins: [
-      new MiniCssExtractPlugin(),
-
-      new CopyWebpackPlugin({
-        patterns: [
+      new HtmlWebpackPlugin(
+        Object.assign(
+          {},
           {
-            from: './public/fonts',
-            to: './build/fonts'
+            inject: true,
+            template: 'public/index.html',
           },
-          // {
-          //   from: './public/assets',
-          //   to: './build/assets'
-          // },
-          {
-            from: './public/index.html',
-            to: './build/index.html'
-          },
-        ]
-      })
+          isProduction
+            ? {
+              minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeRedundantAttributes: true,
+                useShortDoctype: true,
+                removeEmptyAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                keepClosingSlash: true,
+                minifyJS: true,
+                minifyCSS: true,
+                minifyURLs: true,
+              },
+            }
+            : undefined
+        )
+      ),
+      new MiniCssExtractPlugin({
+        filename: 'css/[name].[contenthash:8].css',
+        chunkFilename: 'css/[name].[contenthash:8].chunk.css',
+      }),
     ],
   };
 };
