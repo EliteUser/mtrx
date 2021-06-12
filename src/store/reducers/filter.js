@@ -321,7 +321,7 @@ const filter = (state = initialState, action) => {
       ];
 
       const updatedDefaultPrimitives = [
-        state.defaultPrimitives,
+        ...state.defaultPrimitives,
         primitiveToAdd
       ];
 
