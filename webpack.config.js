@@ -2,6 +2,7 @@ const path = require('path');
 const loaderUtils = require('loader-utils');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
@@ -233,10 +234,13 @@ module.exports = (env, argv) => {
             : undefined
         )
       ),
+
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash:8].css',
         chunkFilename: 'css/[name].[contenthash:8].chunk.css',
       }),
+
+      new WorkboxPlugin.GenerateSW()
     ],
   };
 };
