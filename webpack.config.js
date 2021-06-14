@@ -161,7 +161,8 @@ module.exports = (env, argv) => {
                   plugins: [
                     {
                       prefixIds: false,
-                      cleanupIDs: false
+                      cleanupIDs: false,
+                      removeViewBox: false
                     }
                   ],
                 }
