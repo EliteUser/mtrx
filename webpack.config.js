@@ -1,5 +1,6 @@
 const path = require('path');
 const loaderUtils = require('loader-utils');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
@@ -185,8 +186,7 @@ module.exports = (env, argv) => {
             {
               loader: 'file-loader',
               options: {
-                outputPath: 'img',
-                publicPath: '../img',
+                outputPath: 'assets',
                 name: '[name]-[sha1:hash:7].[ext]'
               }
             }
@@ -210,6 +210,34 @@ module.exports = (env, argv) => {
       ]
     },
     plugins: [
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: './public/manifest.json',
+            to: './',
+            noErrorOnMissing: true,
+          },
+          {
+            context: './public/assets',
+            from: '*.png',
+            to: 'assets',
+            noErrorOnMissing: true,
+          },
+          {
+            context: './public/assets',
+            from: '*.jpeg',
+            to: 'assets',
+            noErrorOnMissing: true,
+          },
+          {
+            context: './public/assets',
+            from: '*.ico',
+            to: 'assets',
+            noErrorOnMissing: true,
+          },
+        ]
+      }),
+
       new HtmlWebpackPlugin(
         Object.assign(
           {},

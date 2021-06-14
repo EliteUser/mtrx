@@ -20,6 +20,7 @@ registerServiceWorker();
 
 // TODO TESTS. Yeah i know...
 // TODO SVG sprite with use. Now all svg icons hardcoded into components and they are duplicating
-// TODO service worker and manifest. Create pwa
+// RDY service worker and manifest. Create pwa
 // TODO Branch with offscreen canvas
 // TODO Check PropTypes
+// TODO Error boundary (global)
