@@ -1,7 +1,8 @@
 {
   "short_name": "MTRX",
   "name": "MTRX - Matrix web photo editor",
-  "start_url": "/mtrx",
+  "start_url": "./",
+  "scope": ".",
   "icons": [
     {
       "src": "assets/android-chrome-192x192.png",
